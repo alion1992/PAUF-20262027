@@ -8,8 +8,8 @@ theme:
 nav:
   - Inicio: index.md
   - "Unidad 1 - Fundamentos de Python":
-      - Introducción: unidad1/index.md
-      - Variables y operadores: unidad1/variables-operadores.md
-      - Condicionales: unidad1/condicionales.md
-      - Bucles: unidad1/bucles.md
-      - Programación orientada a objetos: unidad1/poo.md
+      - Fundamentos de programación Python: unidad1/unidad1-fundamentos.md
+      - Orientación a objetos: unidad1/unidad1-parte2-poo.md
+     
+     
+     
