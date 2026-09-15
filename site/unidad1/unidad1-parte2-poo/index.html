@@ -1,0 +1,1729 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Programación de Aplicaciones utilizando Frameworks">
+      
+      
+      
+      
+        <link rel="prev" href="../unidad1-fundamentos/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Orientación a objetos - PAUF</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#unidad-1-fundamentos-de-python-programacion-orientada-a-objetos-parte-2" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="PAUF" class="md-header__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PAUF
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Orientación a objetos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PAUF" class="md-nav__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PAUF
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unidad1-fundamentos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentos de programación Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orientación a objetos
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orientación a objetos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#19-introduccion-a-la-poo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9. Introducción a la POO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-clases-y-objetos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10. Clases y objetos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-constructor-__init__-y-self" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11. Constructor __init__() y self
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-metodos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12. Métodos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-atributos-de-instancia-y-de-clase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.13. Atributos de instancia y de clase
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-encapsulacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14. Encapsulación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.14. Encapsulación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Público
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protegido-por-convencion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protegido por convención
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privado-mediante-name-mangling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privado mediante name mangling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-getters-setters-y-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.15. Getters, setters y @property
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.15. Getters, setters y @property">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getters-y-setters-tradicionales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getters y setters tradicionales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#propiedades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propiedades
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-herencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.16. Herencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#117-super" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.17. super()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#118-sobrescritura-de-metodos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.18. Sobrescritura de métodos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#119-herencia-multiple-y-mro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.19. Herencia múltiple y MRO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#120-polimorfismo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.20. Polimorfismo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#121-clases-abstractas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.21. Clases abstractas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#122-metodos-estaticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.22. Métodos estáticos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123-metodos-de-clase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.23. Métodos de clase
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#124-metodos-especiales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.24. Métodos especiales
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.24. Métodos especiales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__str__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __str__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__repr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __repr__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__eq__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __eq__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#125-composicion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.25. Composición
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#126-relaciones-entre-clases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.26. Relaciones entre clases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.26. Relaciones entre clases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asociacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asociación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composicion-uno-a-muchos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composición uno a muchos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#19-introduccion-a-la-poo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9. Introducción a la POO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-clases-y-objetos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10. Clases y objetos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-constructor-__init__-y-self" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11. Constructor __init__() y self
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-metodos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12. Métodos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-atributos-de-instancia-y-de-clase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.13. Atributos de instancia y de clase
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-encapsulacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14. Encapsulación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.14. Encapsulación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Público
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protegido-por-convencion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protegido por convención
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privado-mediante-name-mangling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privado mediante name mangling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-getters-setters-y-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.15. Getters, setters y @property
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.15. Getters, setters y @property">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getters-y-setters-tradicionales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getters y setters tradicionales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#propiedades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propiedades
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-herencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.16. Herencia
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#117-super" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.17. super()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#118-sobrescritura-de-metodos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.18. Sobrescritura de métodos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#119-herencia-multiple-y-mro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.19. Herencia múltiple y MRO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#120-polimorfismo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.20. Polimorfismo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#121-clases-abstractas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.21. Clases abstractas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#122-metodos-estaticos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.22. Métodos estáticos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123-metodos-de-clase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.23. Métodos de clase
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#124-metodos-especiales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.24. Métodos especiales
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.24. Métodos especiales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__str__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __str__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__repr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __repr__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__eq__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __eq__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#125-composicion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.25. Composición
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#126-relaciones-entre-clases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.26. Relaciones entre clases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.26. Relaciones entre clases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asociacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asociación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composicion-uno-a-muchos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composición uno a muchos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="unidad-1-fundamentos-de-python-programacion-orientada-a-objetos-parte-2">Unidad 1. Fundamentos de Python: Programación Orientada a Objetos - Parte 2</h1>
+<h2 id="19-introduccion-a-la-poo">1.9. Introducción a la POO</h2>
+<p>La <strong>Programación Orientada a Objetos (POO)</strong> organiza el código
+alrededor de objetos. Un objeto reúne <strong>datos</strong> (atributos) y
+<strong>comportamientos</strong> (métodos).</p>
+<p>!!! info "Conceptos fundamentales" - <strong>Clase:</strong> plantilla que define
+atributos y métodos. - <strong>Objeto:</strong> instancia concreta de una clase. -
+<strong>Atributo:</strong> dato asociado a un objeto. - <strong>Método:</strong> función definida
+dentro de una clase.</p>
+<hr />
+<h2 id="110-clases-y-objetos">1.10. Clases y objetos</h2>
+<p>Las clases se definen con <code>class</code>.</p>
+<pre><code class="language-python">class Persona:
+    pass
+
+persona1 = Persona()
+persona2 = Persona()
+
+print(type(persona1))
+print(isinstance(persona1, Persona))
+</code></pre>
+<p><code>persona1</code> y <code>persona2</code> son objetos diferentes de la misma clase.</p>
+<hr />
+<h2 id="111-constructor-__init__-y-self">1.11. Constructor <code>__init__()</code> y <code>self</code></h2>
+<p><code>__init__()</code> se ejecuta al crear el objeto. <code>self</code> representa al objeto
+actual.</p>
+<pre><code class="language-python">class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+persona1 = Persona(&quot;Ana&quot;, 25)
+persona2 = Persona(&quot;Carlos&quot;, 31)
+
+print(persona1.nombre)
+print(persona2.nombre)
+</code></pre>
+<p>Cada objeto mantiene sus propios valores.</p>
+<p>!!! warning "Importante" <code>self</code> aparece como primer parámetro de los
+métodos de instancia, pero no se pasa manualmente al invocarlos.</p>
+<hr />
+<h2 id="112-metodos">1.12. Métodos</h2>
+<pre><code class="language-python">class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def saludar(self):
+        print(f&quot;Hola, soy {self.nombre}&quot;)
+
+    def es_mayor_edad(self):
+        return self.edad &gt;= 18
+
+persona = Persona(&quot;Laura&quot;, 22)
+persona.saludar()
+print(persona.es_mayor_edad())
+</code></pre>
+<p>Los métodos también pueden recibir parámetros:</p>
+<pre><code class="language-python">class Cuenta:
+    def __init__(self, saldo):
+        self.saldo = saldo
+
+    def ingresar(self, cantidad):
+        self.saldo += cantidad
+
+cuenta = Cuenta(1000)
+cuenta.ingresar(250)
+print(cuenta.saldo)
+</code></pre>
+<hr />
+<h2 id="113-atributos-de-instancia-y-de-clase">1.13. Atributos de instancia y de clase</h2>
+<p>Los <strong>atributos de instancia</strong> pertenecen a cada objeto. Los <strong>atributos
+de clase</strong> son compartidos.</p>
+<pre><code class="language-python">class Alumno:
+    centro = &quot;CIFP Virgen de Gracia&quot;
+
+    def __init__(self, nombre, nota):
+        self.nombre = nombre
+        self.nota = nota
+
+alumno1 = Alumno(&quot;Ana&quot;, 8)
+alumno2 = Alumno(&quot;Luis&quot;, 5)
+
+print(alumno1.nombre)
+print(alumno2.nombre)
+print(Alumno.centro)
+</code></pre>
+<p>Tipo        Pertenece a   Ejemplo</p>
+<hr />
+<p>Instancia   Cada objeto   <code>self.nombre</code>
+  Clase       La clase      <code>Alumno.centro</code></p>
+<hr />
+<h2 id="114-encapsulacion">1.14. Encapsulación</h2>
+<p>La encapsulación permite controlar el acceso a los datos internos.</p>
+<h3 id="publico">Público</h3>
+<pre><code class="language-python">self.nombre = nombre
+</code></pre>
+<h3 id="protegido-por-convencion">Protegido por convención</h3>
+<pre><code class="language-python">self._nombre = nombre
+</code></pre>
+<h3 id="privado-mediante-name-mangling">Privado mediante <em>name mangling</em></h3>
+<pre><code class="language-python">class Cuenta:
+    def __init__(self, saldo):
+        self.__saldo = saldo
+</code></pre>
+<p>!!! note Python no aplica <code>private</code> como Java. <code>_atributo</code> expresa una
+convención y <code>__atributo</code> activa <em>name mangling</em>.</p>
+<hr />
+<h2 id="115-getters-setters-y-property">1.15. Getters, setters y <code>@property</code></h2>
+<h3 id="getters-y-setters-tradicionales">Getters y setters tradicionales</h3>
+<pre><code class="language-python">class Persona:
+    def __init__(self, edad):
+        self.__edad = edad
+
+    def get_edad(self):
+        return self.__edad
+
+    def set_edad(self, edad):
+        if edad &lt; 0:
+            raise ValueError(&quot;La edad no puede ser negativa&quot;)
+        self.__edad = edad
+</code></pre>
+<h3 id="propiedades">Propiedades</h3>
+<pre><code class="language-python">class Persona:
+    def __init__(self, edad):
+        self.__edad = edad
+
+    @property
+    def edad(self):
+        return self.__edad
+
+    @edad.setter
+    def edad(self, valor):
+        if valor &lt; 0:
+            raise ValueError(&quot;La edad no puede ser negativa&quot;)
+        self.__edad = valor
+
+persona = Persona(25)
+print(persona.edad)
+persona.edad = 30
+</code></pre>
+<hr />
+<h2 id="116-herencia">1.16. Herencia</h2>
+<p>La herencia permite crear una clase a partir de otra.</p>
+<pre><code class="language-python">class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def mostrar_datos(self):
+        print(f&quot;{self.nombre} - {self.edad} años&quot;)
+
+
+class Empleado(Persona):
+    pass
+
+empleado = Empleado(&quot;Ana&quot;, 30)
+empleado.mostrar_datos()
+</code></pre>
+<p><code>Empleado</code> hereda los atributos y métodos de <code>Persona</code>.</p>
+<hr />
+<h2 id="117-super">1.17. <code>super()</code></h2>
+<p><code>super()</code> permite acceder al comportamiento de la clase padre.</p>
+<pre><code class="language-python">class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+
+class Empleado(Persona):
+    def __init__(self, nombre, edad, salario):
+        super().__init__(nombre, edad)
+        self.salario = salario
+
+empleado = Empleado(&quot;Carlos&quot;, 32, 25000)
+print(empleado.nombre, empleado.salario)
+</code></pre>
+<hr />
+<h2 id="118-sobrescritura-de-metodos">1.18. Sobrescritura de métodos</h2>
+<p>Una clase hija puede redefinir un método heredado.</p>
+<pre><code class="language-python">class Persona:
+    def presentarse(self):
+        print(&quot;Soy una persona&quot;)
+
+
+class Empleado(Persona):
+    def presentarse(self):
+        print(&quot;Soy un empleado&quot;)
+
+Persona().presentarse()
+Empleado().presentarse()
+</code></pre>
+<p>También podemos reutilizar el método padre:</p>
+<pre><code class="language-python">class Empleado(Persona):
+    def presentarse(self):
+        super().presentarse()
+        print(&quot;Y además soy empleado&quot;)
+</code></pre>
+<hr />
+<h2 id="119-herencia-multiple-y-mro">1.19. Herencia múltiple y MRO</h2>
+<p>Python permite heredar de varias clases.</p>
+<pre><code class="language-python">class Volador:
+    def volar(self):
+        print(&quot;Estoy volando&quot;)
+
+
+class Nadador:
+    def nadar(self):
+        print(&quot;Estoy nadando&quot;)
+
+
+class Pato(Volador, Nadador):
+    pass
+
+pato = Pato()
+pato.volar()
+pato.nadar()
+
+print(Pato.mro())
+</code></pre>
+<p>El <strong>MRO (Method Resolution Order)</strong> determina el orden en el que Python
+busca los métodos.</p>
+<hr />
+<h2 id="120-polimorfismo">1.20. Polimorfismo</h2>
+<p>Objetos de clases diferentes pueden responder al mismo método.</p>
+<pre><code class="language-python">class Perro:
+    def hacer_sonido(self):
+        return &quot;Guau&quot;
+
+
+class Gato:
+    def hacer_sonido(self):
+        return &quot;Miau&quot;
+
+
+animales = [Perro(), Gato()]
+
+for animal in animales:
+    print(animal.hacer_sonido())
+</code></pre>
+<p>Esto permite escribir código que trabaja con diferentes tipos de objetos
+mediante una interfaz común.</p>
+<hr />
+<h2 id="121-clases-abstractas">1.21. Clases abstractas</h2>
+<p>El módulo <code>abc</code> permite definir clases que sirven como contrato para sus
+subclases.</p>
+<pre><code class="language-python">from abc import ABC, abstractmethod
+
+
+class Empleado(ABC):
+    @abstractmethod
+    def calcular_salario(self):
+        pass
+
+
+class Programador(Empleado):
+    def __init__(self, salario):
+        self.salario = salario
+
+    def calcular_salario(self):
+        return self.salario
+
+
+programador = Programador(2500)
+print(programador.calcular_salario())
+</code></pre>
+<p>Una subclase debe implementar los métodos marcados con <code>@abstractmethod</code>
+para poder instanciarse.</p>
+<hr />
+<h2 id="122-metodos-estaticos">1.22. Métodos estáticos</h2>
+<p><code>@staticmethod</code> define un método que no necesita <code>self</code> ni <code>cls</code>.</p>
+<pre><code class="language-python">class Calculadora:
+    @staticmethod
+    def sumar(a, b):
+        return a + b
+
+print(Calculadora.sumar(10, 5))
+</code></pre>
+<hr />
+<h2 id="123-metodos-de-clase">1.23. Métodos de clase</h2>
+<p><code>@classmethod</code> recibe la clase mediante <code>cls</code>.</p>
+<pre><code class="language-python">class Usuario:
+    total_usuarios = 0
+
+    def __init__(self, nombre):
+        self.nombre = nombre
+        Usuario.total_usuarios += 1
+
+    @classmethod
+    def mostrar_total(cls):
+        return cls.total_usuarios
+
+Usuario(&quot;Ana&quot;)
+Usuario(&quot;Luis&quot;)
+print(Usuario.mostrar_total())
+</code></pre>
+<p>También permite crear constructores alternativos:</p>
+<pre><code class="language-python">class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    @classmethod
+    def desde_cadena(cls, datos):
+        nombre, edad = datos.split(&quot;,&quot;)
+        return cls(nombre, int(edad))
+
+persona = Persona.desde_cadena(&quot;Ana,25&quot;)
+</code></pre>
+<hr />
+<h2 id="124-metodos-especiales">1.24. Métodos especiales</h2>
+<p>Los métodos especiales o <strong>dunder methods</strong> permiten personalizar
+operaciones del lenguaje.</p>
+<h3 id="__str__"><code>__str__()</code></h3>
+<pre><code class="language-python">class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def __str__(self):
+        return f&quot;{self.nombre} ({self.edad} años)&quot;
+
+persona = Persona(&quot;Ana&quot;, 25)
+print(persona)
+</code></pre>
+<h3 id="__repr__"><code>__repr__()</code></h3>
+<pre><code class="language-python">def __repr__(self):
+    return f&quot;Persona(nombre={self.nombre!r}, edad={self.edad})&quot;
+</code></pre>
+<h3 id="__eq__"><code>__eq__()</code></h3>
+<pre><code class="language-python">class Producto:
+    def __init__(self, codigo, nombre):
+        self.codigo = codigo
+        self.nombre = nombre
+
+    def __eq__(self, otro):
+        if not isinstance(otro, Producto):
+            return False
+        return self.codigo == otro.codigo
+</code></pre>
+<p>Método       Utilidad</p>
+<hr />
+<p><code>__init__</code>   Inicializar un objeto
+  <code>__str__</code>    Representación legible
+  <code>__repr__</code>   Representación para depuración
+  <code>__eq__</code>     Operador <code>==</code>
+  <code>__len__</code>    Función <code>len()</code>
+  <code>__lt__</code>     Operador <code>&lt;</code>
+  <code>__add__</code>    Operador <code>+</code></p>
+<hr />
+<h2 id="125-composicion">1.25. Composición</h2>
+<p>En composición, un objeto contiene otros objetos.</p>
+<pre><code class="language-python">class Motor:
+    def arrancar(self):
+        print(&quot;Motor arrancado&quot;)
+
+
+class Coche:
+    def __init__(self, marca):
+        self.marca = marca
+        self.motor = Motor()
+
+    def arrancar(self):
+        print(f&quot;Arrancando {self.marca}&quot;)
+        self.motor.arrancar()
+
+coche = Coche(&quot;Toyota&quot;)
+coche.arrancar()
+</code></pre>
+<p>!!! tip "Herencia o composición" - <strong>Herencia:</strong> un <code>Programador</code> <strong>es
+un</strong> <code>Empleado</code>. - <strong>Composición:</strong> una <code>Empresa</code> <strong>tiene</strong> empleados.</p>
+<hr />
+<h2 id="126-relaciones-entre-clases">1.26. Relaciones entre clases</h2>
+<h3 id="asociacion">Asociación</h3>
+<p>Dos objetos se relacionan y pueden existir independientemente.</p>
+<pre><code class="language-python">class Profesor:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+
+class Modulo:
+    def __init__(self, nombre, profesor):
+        self.nombre = nombre
+        self.profesor = profesor
+
+profesor = Profesor(&quot;Francisco&quot;)
+modulo = Modulo(&quot;PAUF&quot;, profesor)
+
+print(modulo.profesor.nombre)
+</code></pre>
+<h3 id="composicion-uno-a-muchos">Composición uno a muchos</h3>
+<pre><code class="language-python">class Empresa:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.empleados = []
+
+    def contratar(self, empleado):
+        self.empleados.append(empleado)
+</code></pre>
+<hr />
+<h1 id="127-ejemplo-completo-gestion-de-una-empresa">1.27. Ejemplo completo: gestión de una empresa</h1>
+<p>Este ejemplo integra <strong>herencia, encapsulación, propiedades, clases
+abstractas, polimorfismo y composición</strong>.</p>
+<pre><code class="language-python">from abc import ABC, abstractmethod
+
+
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def __str__(self):
+        return f&quot;{self.nombre} ({self.edad} años)&quot;
+
+
+class Empleado(Persona, ABC):
+    def __init__(self, nombre, edad, salario):
+        super().__init__(nombre, edad)
+        self.salario = salario
+
+    @property
+    def salario(self):
+        return self.__salario
+
+    @salario.setter
+    def salario(self, valor):
+        if valor &lt; 0:
+            raise ValueError(&quot;El salario no puede ser negativo&quot;)
+        self.__salario = valor
+
+    @abstractmethod
+    def calcular_bonus(self):
+        pass
+
+
+class Programador(Empleado):
+    def __init__(self, nombre, edad, salario, lenguaje):
+        super().__init__(nombre, edad, salario)
+        self.lenguaje = lenguaje
+
+    def calcular_bonus(self):
+        return self.salario * 0.10
+
+    def __str__(self):
+        return f&quot;{super().__str__()} - Programador de {self.lenguaje}&quot;
+
+
+class Administrador(Empleado):
+    def calcular_bonus(self):
+        return self.salario * 0.05
+
+
+class Empresa:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.empleados = []
+
+    def contratar(self, empleado):
+        self.empleados.append(empleado)
+
+    def mostrar_empleados(self):
+        for empleado in self.empleados:
+            print(empleado)
+            print(f&quot;Bonus: {empleado.calcular_bonus():.2f} €&quot;)
+
+
+empresa = Empresa(&quot;Tech FP&quot;)
+
+empresa.contratar(
+    Programador(&quot;Ana&quot;, 27, 28000, &quot;Python&quot;)
+)
+
+empresa.contratar(
+    Administrador(&quot;Carlos&quot;, 40, 30000)
+)
+
+empresa.mostrar_empleados()
+</code></pre>
+<h3 id="que-conceptos-aparecen">¿Qué conceptos aparecen?</h3>
+<p>Concepto          Aplicación</p>
+<hr />
+<p>Clase             <code>Persona</code>, <code>Empleado</code>, <code>Programador</code>, <code>Empresa</code>
+  Objeto            Cada empleado creado
+  Encapsulación     <code>__salario</code>
+  Propiedad         <code>@property</code>
+  Herencia          <code>Empleado(Persona)</code>
+  Clase abstracta   <code>Empleado(ABC)</code>
+  Polimorfismo      <code>calcular_bonus()</code>
+  Sobrescritura     <code>__str__()</code>
+  Composición       <code>Empresa</code> contiene empleados</p>
+<hr />
+<h1 id="128-ejercicios-propuestos">1.28. Ejercicios propuestos</h1>
+<h2 id="ejercicio-1-cuenta-bancaria">Ejercicio 1. Cuenta bancaria</h2>
+<p>Crea una clase <code>CuentaBancaria</code>.</p>
+<p>Debe contener:</p>
+<ul>
+<li>Titular.</li>
+<li>Saldo privado.</li>
+<li>Método <code>ingresar()</code>.</li>
+<li>Método <code>retirar()</code>.</li>
+<li>Propiedad para consultar el saldo.</li>
+<li>No se debe permitir retirar más dinero del disponible.</li>
+</ul>
+<hr />
+<h2 id="ejercicio-2-vehiculos">Ejercicio 2. Vehículos</h2>
+<p>Crea una clase padre <code>Vehiculo</code> con:</p>
+<ul>
+<li>Matrícula.</li>
+<li>Marca.</li>
+<li>Modelo.</li>
+</ul>
+<p>Crea las clases:</p>
+<ul>
+<li><code>Coche</code>.</li>
+<li><code>Moto</code>.</li>
+</ul>
+<p>Ambas deben sobrescribir un método llamado <code>mostrar_tipo()</code>.</p>
+<p>Guarda varios vehículos en una lista y recórrela demostrando el
+<strong>polimorfismo</strong>.</p>
+<hr />
+<h2 id="ejercicio-3-tienda">Ejercicio 3. Tienda</h2>
+<p>Crea una clase <code>Producto</code> con:</p>
+<ul>
+<li>Código.</li>
+<li>Nombre.</li>
+<li>Precio.</li>
+</ul>
+<p>Crea una clase <code>Tienda</code> que contenga una lista de productos.</p>
+<p>Debe permitir:</p>
+<ol>
+<li>Añadir productos.</li>
+<li>Buscar un producto por código.</li>
+<li>Mostrar todos los productos.</li>
+<li>Calcular el valor total del inventario.</li>
+</ol>
+<hr />
+<h2 id="ejercicio-4-empleados">Ejercicio 4. Empleados</h2>
+<p>Crea una clase abstracta <code>Empleado</code> con el método:</p>
+<pre><code class="language-python">calcular_salario()
+</code></pre>
+<p>Crea dos clases hijas:</p>
+<ul>
+<li><code>EmpleadoFijo</code>.</li>
+<li><code>EmpleadoPorHoras</code>.</li>
+</ul>
+<p>Cada clase debe calcular el salario de manera diferente.</p>
+<p>Guarda distintos empleados en una lista y calcula sus salarios mediante
+polimorfismo.</p>
+<hr />
+<h2 id="ejercicio-5-biblioteca">Ejercicio 5. Biblioteca</h2>
+<p>Diseña una pequeña aplicación utilizando:</p>
+<ul>
+<li><code>Libro</code>.</li>
+<li><code>Usuario</code>.</li>
+<li><code>Prestamo</code>.</li>
+<li><code>Biblioteca</code>.</li>
+</ul>
+<p>La biblioteca debe permitir prestar y devolver libros.</p>
+<p>El ejercicio debe utilizar <strong>composición entre objetos</strong> y controlar
+mediante excepciones situaciones como:</p>
+<ul>
+<li>Libro no encontrado.</li>
+<li>Libro ya prestado.</li>
+<li>Usuario inexistente.</li>
+</ul>
+<hr />
+<h2 id="resumen">Resumen</h2>
+<p>En esta parte hemos trabajado los principales conceptos de POO en
+Python:</p>
+<ul>
+<li>Clases y objetos.</li>
+<li>Constructores y <code>self</code>.</li>
+<li>Atributos y métodos.</li>
+<li>Encapsulación.</li>
+<li>Propiedades.</li>
+<li>Herencia.</li>
+<li><code>super()</code>.</li>
+<li>Sobrescritura.</li>
+<li>Herencia múltiple y MRO.</li>
+<li>Polimorfismo.</li>
+<li>Clases abstractas.</li>
+<li>Métodos estáticos y de clase.</li>
+<li>Métodos especiales.</li>
+<li>Asociación y composición.</li>
+</ul>
+<p>Estos conceptos son especialmente importantes antes de trabajar con
+frameworks, ya que frameworks como <strong>Django</strong> y <strong>Spring Boot</strong> hacen un
+uso intensivo de clases, objetos, herencia y composición.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
