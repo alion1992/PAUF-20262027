@@ -7,7 +7,7 @@ theme:
 
 nav:
   - Inicio: index.md
-  - "Unidad 1 - Fundamentos de Python":
+  - "Unidad 1 - Fundamentos de Pyhon":
       - Fundamentos de programación Python: unidad1/unidad1-fundamentos.md
       - Orientación a objetos: unidad1/unidad1-parte2-poo.md
       - Ejercicios Clase: unidad1/ejerciciosClase/ejercicios-fundamentos-parte1.md
