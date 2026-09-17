@@ -10,7 +10,9 @@ nav:
   - "Unidad 1 - Fundamentos de Python":
       - Fundamentos de programación Python: unidad1/unidad1-fundamentos.md
       - Orientación a objetos: unidad1/unidad1-parte2-poo.md
-      - Ejercicios Clase: unidad1/ejerciciosClase/ejercicios-fundamentos-parte1.md
+      - "Ejercicios Clase": 
+        - "Ejercicios fundamentos": unidad1/ejerciciosClase/ejercicios-fundamentos-parte1.md
+        - "Ejercicios la liga": unidad1/ejerciciosClase/ejercicio-la-liga.md
      
      
      
