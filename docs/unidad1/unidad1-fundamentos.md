@@ -333,7 +333,193 @@ numeros.sort(reverse=True)
 
 ------------------------------------------------------------------------
 
-## 1.7. Uso de ficheros
+## 1.7. Diccionarios
+
+### Diccionarios
+
+Un **diccionario** es una estructura de datos que permite almacenar información mediante pares **clave-valor**.
+
+A diferencia de las listas, donde accedemos a los elementos mediante su posición, en los diccionarios utilizamos una **clave**.
+
+```python
+alumno = {
+    "nombre": "Francisco",
+    "edad": 33,
+    "curso": "DAW",
+    "aprobado": True
+}
+
+print(alumno)
+```
+
+Cada elemento está formado por una clave y un valor:
+
+```text
+"nombre"   -> "Francisco"
+"edad"     -> 33
+"curso"    -> "DAW"
+"aprobado" -> True
+```
+
+#### Acceder a los valores
+
+Podemos acceder a un valor utilizando su clave:
+
+```python
+print(alumno["nombre"])
+print(alumno["edad"])
+```
+
+También podemos utilizar el método `get()`:
+
+```python
+print(alumno.get("curso"))
+```
+
+Una ventaja de `get()` es que podemos indicar un valor por defecto si la clave no existe:
+
+```python
+print(alumno.get("telefono", "No disponible"))
+```
+
+#### Añadir elementos
+
+Para añadir un nuevo elemento simplemente indicamos una nueva clave:
+
+```python
+alumno["email"] = "francisco@email.com"
+
+print(alumno)
+```
+
+#### Modificar elementos
+
+Si la clave ya existe, podemos modificar su valor:
+
+```python
+alumno["edad"] = 34
+alumno["aprobado"] = False
+
+print(alumno)
+```
+
+#### Eliminar elementos
+
+Podemos eliminar un elemento utilizando `del`:
+
+```python
+del alumno["curso"]
+
+print(alumno)
+```
+
+También podemos utilizar `pop()`:
+
+```python
+edad = alumno.pop("edad")
+
+print(edad)
+print(alumno)
+```
+
+#### Comprobar si existe una clave
+
+Podemos utilizar el operador `in`:
+
+```python
+if "nombre" in alumno:
+    print("El alumno tiene nombre")
+```
+
+#### Recorrer un diccionario
+
+Podemos recorrer directamente sus claves:
+
+```python
+for clave in alumno:
+    print(clave)
+```
+
+Para obtener los valores utilizamos `values()`:
+
+```python
+for valor in alumno.values():
+    print(valor)
+```
+
+Para obtener claves y valores utilizamos `items()`:
+
+```python
+for clave, valor in alumno.items():
+    print(clave, "->", valor)
+```
+
+#### Métodos principales de los diccionarios
+
+| Método | Descripción |
+|---|---|
+| `get()` | Obtiene el valor asociado a una clave |
+| `keys()` | Devuelve las claves |
+| `values()` | Devuelve los valores |
+| `items()` | Devuelve las parejas clave-valor |
+| `pop()` | Elimina un elemento y devuelve su valor |
+| `update()` | Añade o actualiza varios elementos |
+| `clear()` | Elimina todos los elementos |
+
+Ejemplo de `update()`:
+
+```python
+alumno.update({
+    "edad": 35,
+    "ciudad": "Puertollano"
+})
+
+print(alumno)
+```
+
+#### Diccionarios y listas
+
+Es muy habitual utilizar una **lista de diccionarios**:
+
+```python
+alumnos = [
+    {
+        "nombre": "Ana",
+        "nota": 8
+    },
+    {
+        "nombre": "Luis",
+        "nota": 4
+    },
+    {
+        "nombre": "Marta",
+        "nota": 7
+    }
+]
+```
+
+Podemos recorrerla utilizando un bucle:
+
+```python
+for alumno in alumnos:
+    print(alumno["nombre"], alumno["nota"])
+```
+
+También podemos combinar diccionarios y condicionales:
+
+```python
+for alumno in alumnos:
+
+    if alumno["nota"] >= 5:
+        print(alumno["nombre"], "ha aprobado")
+    else:
+        print(alumno["nombre"], "ha suspendido")
+```
+
+!!! tip "Importante"
+    Las listas y los diccionarios se utilizan frecuentemente de forma conjunta. Esta estructura será especialmente útil cuando trabajemos posteriormente con datos procedentes de APIs y JSON.
+
+## 1.8. Uso de ficheros
 
 ### Abrir un fichero
 
@@ -407,7 +593,7 @@ ficheros correspondientes en nuestro directorio raíz.
 
 ------------------------------------------------------------------------
 
-## 1.8. Excepciones en Python
+## 1.9. Excepciones en Python
 
 ### Excepción base
 
