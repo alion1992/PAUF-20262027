@@ -75,3 +75,9 @@ Si queremos que se muestre algo más que una simple referencia a memoria podemos
 [Variables en models](https://docs.djangoproject.com/en/5.1/ref/models/fields/)
 
 [Proyecto de ejemplo](https://github.com/alion1992/djangoIntroduccion)
+
+## Ejercicio Clase
+
+Genera el siguiete modelo
+
+![alt text](image-21.png)
