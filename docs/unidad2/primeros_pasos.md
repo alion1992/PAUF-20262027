@@ -18,7 +18,7 @@ Podríamos decir que el archivo  setting.py es donde están todas las configurac
 
 ```bash
 python manage.py startapp pruebadb
-````
+```
 
 ![alt text](image-9.png)
 
@@ -72,6 +72,6 @@ Podemos rellenar la tabla desde la administración
 
 Si queremos que se muestre algo más que una simple referencia a memoria podemos sobreescribir el método __str__ (el toString de siempre)
 
-https://docs.djangoproject.com/en/5.1/ref/models/fields/
+[Variables en models](https://docs.djangoproject.com/en/5.1/ref/models/fields/)
 
-https://github.com/alion1992/djangoIntroduccion 
+[Proyecto de ejemplo](https://github.com/alion1992/djangoIntroduccion)
