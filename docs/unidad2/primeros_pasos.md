@@ -72,6 +72,12 @@ Podemos rellenar la tabla desde la administración
 
 Si queremos que se muestre algo más que una simple referencia a memoria podemos sobreescribir el método __str__ (el toString de siempre)
 
+Si queremos renombrar los nombres de las tablas en el menu de administración, debemos cambiar los metadatos de la tabla
+
+![alt text](image-22.png)
+
+Sobreescribiendo los datos que vienen por defecto
+
 [Variables en models](https://docs.djangoproject.com/en/5.1/ref/models/fields/)
 
 [Proyecto de ejemplo](https://github.com/alion1992/djangoIntroduccion)
