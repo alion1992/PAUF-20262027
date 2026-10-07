@@ -15,7 +15,7 @@ nav:
         - "Ejercicios la liga": unidad1/ejerciciosClase/ejercicio-la-liga.md
         - "Ejercicios ficheros": unidad1/ejerciciosClase/ejercicios-ficheros.md
   - "Unidad 2 - Desarrollo de aplicaciones Back-End con Django":
-      - Introducción: unidad2/introduccion/index.md
-      - Primeros pasos: unidad2/primeros_pasos/index.md
+    - Introducción: unidad2/introduccion.md
+    - Primeros pasos: unidad2/primeros_pasos.md
      
      
