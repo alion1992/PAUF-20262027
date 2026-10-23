@@ -1,0 +1,1638 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Programación de Aplicaciones utilizando Frameworks">
+      
+      
+      
+      
+        <link rel="prev" href="../primeros_pasos/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Relaciones - PAUF</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#relaciones-entre-tablas-en-django" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="PAUF" class="md-header__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PAUF
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Relaciones
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PAUF" class="md-nav__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PAUF
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-fundamentos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentos de programación Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-parte2-poo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orientación a objetos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios Clase
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ejercicios Clase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-fundamentos-parte1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios fundamentos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicio-la-liga/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios la liga
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-ficheros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios ficheros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../primeros_pasos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primeros pasos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relaciones
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-relacion-uno-a-muchos-foreignkey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Relación uno a muchos: ForeignKey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Relación uno a muchos: ForeignKey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-que-es" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. ¿Qué es?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-crear-los-modelos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Crear los modelos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-parametros-de-foreignkey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Parámetros de ForeignKey
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-generar-las-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Generar las migraciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-registrar-los-modelos-en-el-administrador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Registrar los modelos en el administrador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-consultar-relaciones-con-django-orm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Consultar relaciones con Django ORM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Consultar relaciones con Django ORM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-acceder-desde-el-jugador-al-equipo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Acceder desde el jugador al equipo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-acceder-desde-el-equipo-a-sus-jugadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Acceder desde el equipo a sus jugadores
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-relacion-uno-a-uno-onetoonefield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Relación uno a uno: OneToOneField
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Relación uno a uno: OneToOneField">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-que-es" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1. ¿Qué es?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-crear-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2. Crear el modelo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-consultar-la-relacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3. Consultar la relación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-relacion-muchos-a-muchos-manytomanyfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Relación muchos a muchos: ManyToManyField
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Relación muchos a muchos: ManyToManyField">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-que-es" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1. ¿Qué es?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-crear-los-modelos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2. Crear los modelos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-consultar-los-jugadores-de-un-torneo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3. Consultar los jugadores de un torneo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-consultar-los-torneos-de-un-jugador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4. Consultar los torneos de un jugador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-anadir-jugadores-a-un-torneo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5. Añadir jugadores a un torneo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-comparacion-de-los-tres-tipos-de-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Comparación de los tres tipos de relaciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-buenas-practicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Buenas prácticas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-comandos-para-pruebas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Comandos para pruebas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicio-vueling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicio VUELING
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-relacion-uno-a-muchos-foreignkey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Relación uno a muchos: ForeignKey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Relación uno a muchos: ForeignKey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-que-es" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. ¿Qué es?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-crear-los-modelos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Crear los modelos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-parametros-de-foreignkey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Parámetros de ForeignKey
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-generar-las-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Generar las migraciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-registrar-los-modelos-en-el-administrador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Registrar los modelos en el administrador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-consultar-relaciones-con-django-orm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Consultar relaciones con Django ORM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Consultar relaciones con Django ORM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-acceder-desde-el-jugador-al-equipo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Acceder desde el jugador al equipo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-acceder-desde-el-equipo-a-sus-jugadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Acceder desde el equipo a sus jugadores
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-relacion-uno-a-uno-onetoonefield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Relación uno a uno: OneToOneField
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Relación uno a uno: OneToOneField">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-que-es" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1. ¿Qué es?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-crear-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2. Crear el modelo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-consultar-la-relacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3. Consultar la relación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-relacion-muchos-a-muchos-manytomanyfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Relación muchos a muchos: ManyToManyField
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Relación muchos a muchos: ManyToManyField">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-que-es" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1. ¿Qué es?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-crear-los-modelos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2. Crear los modelos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-consultar-los-jugadores-de-un-torneo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3. Consultar los jugadores de un torneo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-consultar-los-torneos-de-un-jugador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4. Consultar los torneos de un jugador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-anadir-jugadores-a-un-torneo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5. Añadir jugadores a un torneo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-comparacion-de-los-tres-tipos-de-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Comparación de los tres tipos de relaciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-buenas-practicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Buenas prácticas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-comandos-para-pruebas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Comandos para pruebas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejercicio-vueling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicio VUELING
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="relaciones-entre-tablas-en-django">Relaciones entre tablas en Django</h1>
+<h2 id="1-introduccion">1. Introducción</h2>
+<p>En una base de datos relacional, las tablas pueden estar relacionadas entre sí. Por ejemplo, una empresa puede tener varios departamentos y cada departamento puede tener varios empleados.</p>
+<p>Django permite definir estas relaciones mediante su ORM (<em>Object-Relational Mapping</em>), utilizando campos especiales en los modelos.</p>
+<p>Existen tres tipos principales de relaciones:</p>
+<table>
+<thead>
+<tr>
+<th>Tipo de relación</th>
+<th>Campo Django</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uno a muchos</td>
+<td><code>ForeignKey</code></td>
+<td>Un equipo tiene varios jugadores.</td>
+</tr>
+<tr>
+<td>Uno a uno</td>
+<td><code>OneToOneField</code></td>
+<td>Un usuario tiene un perfil.</td>
+</tr>
+<tr>
+<td>Muchos a muchos</td>
+<td><code>ManyToManyField</code></td>
+<td>Un alumno cursa varias asignaturas.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-relacion-uno-a-muchos-foreignkey">2. Relación uno a muchos: ForeignKey</h2>
+<h3 id="21-que-es">2.1. ¿Qué es?</h3>
+<p>Una relación uno a muchos permite que un registro de una tabla esté relacionado con varios registros de otra tabla.</p>
+<p>Por ejemplo:</p>
+<ul>
+<li>Un equipo puede tener muchos jugadores.</li>
+<li>Cada jugador pertenece a un único equipo.</li>
+</ul>
+<p>La clave foránea se almacena en la tabla del lado muchos. En este caso, la tabla <code>Jugador</code> tendrá un campo que referencia al identificador de <code>Equipo</code>.</p>
+<h3 id="22-crear-los-modelos">2.2. Crear los modelos</h3>
+<p>En el archivo <code>models.py</code> creamos el modelo <code>Equipo</code>:</p>
+<pre><code class="language-python">from django.db import models
+
+
+class Equipo(models.Model):
+    nombre = models.CharField(max_length=50)
+    ciudad = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
+</code></pre>
+<p>A continuación, creamos el modelo <code>Jugador</code>:</p>
+<pre><code class="language-python">class Jugador(models.Model):
+    nombre = models.CharField(max_length=50)
+    edad = models.IntegerField()
+
+    equipo = models.ForeignKey(
+        Equipo,
+        on_delete=models.PROTECT,
+        related_name=&quot;jugadores&quot;
+    )
+
+    def __str__(self):
+        return self.nombre
+</code></pre>
+<p>El campo <code>equipo</code> establece la relación entre ambos modelos.</p>
+<h3 id="23-parametros-de-foreignkey">2.3. Parámetros de ForeignKey</h3>
+<p><strong><code>Equipo</code></strong></p>
+<p>Indica el modelo con el que queremos establecer la relación.</p>
+<p><strong><code>on_delete</code></strong></p>
+<p>Define qué ocurre cuando se intenta eliminar el objeto relacionado.</p>
+<table>
+<thead>
+<tr>
+<th>Opción</th>
+<th>Comportamiento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>models.CASCADE</code></td>
+<td>Elimina también los registros que dependen del objeto eliminado.</td>
+</tr>
+<tr>
+<td><code>models.PROTECT</code></td>
+<td>Impide eliminar el objeto mientras existan registros relacionados.</td>
+</tr>
+<tr>
+<td><code>models.SET_NULL</code></td>
+<td>Asigna <code>NULL</code> a la relación. Requiere <code>null=True</code>.</td>
+</tr>
+<tr>
+<td><code>models.SET_DEFAULT</code></td>
+<td>Asigna el valor por defecto. Requiere definir <code>default</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>related_name</code></strong></p>
+<p>Permite establecer el nombre utilizado para acceder desde el modelo relacionado.</p>
+<p>En nuestro ejemplo, <code>related_name="jugadores"</code> permite consultar los jugadores de un equipo mediante <code>equipo.jugadores.all()</code>.</p>
+<h3 id="24-generar-las-migraciones">2.4. Generar las migraciones</h3>
+<p>Después de crear o modificar los modelos, debemos actualizar la base de datos.</p>
+<pre><code class="language-bash">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<ul>
+<li><code>makemigrations</code>: genera los archivos de migración a partir de los cambios realizados en los modelos.</li>
+<li><code>migrate</code>: aplica las migraciones a la base de datos.</li>
+</ul>
+<p>Django creará una columna llamada <code>equipo_id</code> en la tabla de jugadores. Esta columna almacena la clave primaria del equipo al que pertenece cada jugador.</p>
+<p><strong>Importante:</strong> si la tabla ya contiene jugadores, añadir una relación obligatoria puede requerir asignar un valor por defecto durante la migración. Para una práctica inicial, se puede trabajar con una base de datos de prueba vacía o permitir temporalmente valores nulos.</p>
+<h3 id="25-registrar-los-modelos-en-el-administrador">2.5. Registrar los modelos en el administrador</h3>
+<p>En <code>admin.py</code>:</p>
+<pre><code class="language-python">from django.contrib import admin
+from .models import Equipo, Jugador
+
+admin.site.register(Equipo)
+admin.site.register(Jugador)
+</code></pre>
+<p>Ahora podemos crear equipos y jugadores desde el panel de administración de Django.</p>
+<p>Al crear un jugador, seleccionaremos el equipo al que pertenece.</p>
+<h2 id="3-consultar-relaciones-con-django-orm">3. Consultar relaciones con Django ORM</h2>
+<h3 id="31-acceder-desde-el-jugador-al-equipo">3.1. Acceder desde el jugador al equipo</h3>
+<p>Podemos obtener un jugador y consultar los datos de su equipo:</p>
+<pre><code class="language-python">jugador = Jugador.objects.get(nombre=&quot;Carlos&quot;)
+
+print(jugador.equipo.nombre)
+print(jugador.equipo.ciudad)
+</code></pre>
+<p>Django permite acceder al objeto relacionado mediante el nombre del campo definido en <code>ForeignKey</code>.</p>
+<h3 id="32-acceder-desde-el-equipo-a-sus-jugadores">3.2. Acceder desde el equipo a sus jugadores</h3>
+<p>Gracias a <code>related_name="jugadores"</code>, podemos obtener todos los jugadores de un equipo:</p>
+<pre><code class="language-python">equipo = Equipo.objects.get(nombre=&quot;Los Lobos&quot;)
+
+for jugador in equipo.jugadores.all():
+    print(jugador.nombre)
+</code></pre>
+<p>También podemos filtrar directamente los jugadores por el nombre del equipo:</p>
+<pre><code class="language-python">jugadores = Jugador.objects.filter(
+    equipo__nombre=&quot;Los Lobos&quot;
+)
+</code></pre>
+<p>El doble guion bajo (<code>__</code>) permite consultar campos de modelos relacionados.</p>
+<h2 id="4-relacion-uno-a-uno-onetoonefield">4. Relación uno a uno: OneToOneField</h2>
+<h3 id="41-que-es">4.1. ¿Qué es?</h3>
+<p>Una relación uno a uno permite asociar un registro de un modelo con un único registro de otro modelo, y viceversa.</p>
+<p>Por ejemplo, cada jugador puede tener una ficha de estadísticas avanzadas.</p>
+<h3 id="42-crear-el-modelo">4.2. Crear el modelo</h3>
+<pre><code class="language-python">class EstadisticasAvanzadas(models.Model):
+    jugador = models.OneToOneField(
+        Jugador,
+        on_delete=models.CASCADE
+    )
+
+    asistencias = models.IntegerField(default=0)
+    tarjetas = models.IntegerField(default=0)
+</code></pre>
+<p>En este ejemplo:</p>
+<ul>
+<li>Cada ficha pertenece a un único jugador.</li>
+<li>Un jugador no puede tener dos fichas de este modelo.</li>
+<li>Si se elimina el jugador, también se elimina su ficha de estadísticas debido a <code>CASCADE</code>.</li>
+</ul>
+<h3 id="43-consultar-la-relacion">4.3. Consultar la relación</h3>
+<p>Desde la ficha podemos acceder al jugador:</p>
+<pre><code class="language-python">estadisticas = EstadisticasAvanzadas.objects.first()
+
+print(estadisticas.jugador.nombre)
+</code></pre>
+<p>Desde el jugador podemos acceder a su ficha utilizando el nombre inverso predeterminado:</p>
+<pre><code class="language-python">jugador = Jugador.objects.get(nombre=&quot;Carlos&quot;)
+
+print(jugador.estadisticasavanzadas.asistencias)
+</code></pre>
+<p>Si el jugador no tiene ficha, el acceso inverso puede producir una excepción <code>RelatedObjectDoesNotExist</code>.</p>
+<h2 id="5-relacion-muchos-a-muchos-manytomanyfield">5. Relación muchos a muchos: ManyToManyField</h2>
+<h3 id="51-que-es">5.1. ¿Qué es?</h3>
+<p>Una relación muchos a muchos permite que varios registros de un modelo estén relacionados con varios registros de otro modelo.</p>
+<p>Por ejemplo:</p>
+<ul>
+<li>Un jugador puede participar en varios torneos.</li>
+<li>Un torneo puede contar con muchos jugadores.</li>
+</ul>
+<h3 id="52-crear-los-modelos">5.2. Crear los modelos</h3>
+<pre><code class="language-python">class Torneo(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    jugadores = models.ManyToManyField(
+        Jugador,
+        related_name=&quot;torneos&quot;
+    )
+
+    def __str__(self):
+        return self.nombre
+</code></pre>
+<p>Django crea automáticamente una tabla intermedia para almacenar las relaciones entre los torneos y los jugadores.</p>
+<h3 id="53-consultar-los-jugadores-de-un-torneo">5.3. Consultar los jugadores de un torneo</h3>
+<pre><code class="language-python">torneo = Torneo.objects.get(
+    nombre=&quot;Torneo de invierno&quot;
+)
+
+for jugador in torneo.jugadores.all():
+    print(jugador.nombre)
+</code></pre>
+<h3 id="54-consultar-los-torneos-de-un-jugador">5.4. Consultar los torneos de un jugador</h3>
+<p>Gracias a <code>related_name="torneos"</code>:</p>
+<pre><code class="language-python">jugador = Jugador.objects.get(nombre=&quot;Carlos&quot;)
+
+for torneo in jugador.torneos.all():
+    print(torneo.nombre)
+</code></pre>
+<h3 id="55-anadir-jugadores-a-un-torneo">5.5. Añadir jugadores a un torneo</h3>
+<p>Podemos establecer relaciones desde el ORM:</p>
+<pre><code class="language-python">torneo = Torneo.objects.get(
+    nombre=&quot;Torneo de invierno&quot;
+)
+
+jugador = Jugador.objects.get(nombre=&quot;Carlos&quot;)
+
+torneo.jugadores.add(jugador)
+</code></pre>
+<p>También podemos eliminar una relación sin eliminar el jugador ni el torneo:</p>
+<pre><code class="language-python">torneo.jugadores.remove(jugador)
+</code></pre>
+<h2 id="6-comparacion-de-los-tres-tipos-de-relaciones">6. Comparación de los tres tipos de relaciones</h2>
+<table>
+<thead>
+<tr>
+<th>Característica</th>
+<th>ForeignKey</th>
+<th>OneToOneField</th>
+<th>ManyToManyField</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo</td>
+<td>Uno a muchos</td>
+<td>Uno a uno</td>
+<td>Muchos a muchos</td>
+</tr>
+<tr>
+<td>Clave foránea</td>
+<td>En el modelo que contiene el campo</td>
+<td>En el modelo que contiene el campo</td>
+<td>Tabla intermedia</td>
+</tr>
+<tr>
+<td>Ejemplo</td>
+<td>Equipo y jugadores</td>
+<td>Jugador y ficha</td>
+<td>Torneos y jugadores</td>
+</tr>
+<tr>
+<td>Permite varios relacionados</td>
+<td>Sí, en el lado inverso</td>
+<td>No</td>
+<td>Sí, en ambos lados</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-buenas-practicas">7. Buenas prácticas</h2>
+<ul>
+<li>Utilizar nombres de modelos en singular: <code>Jugador</code>, <code>Equipo</code>, <code>Torneo</code>.</li>
+<li>Definir <code>__str__()</code> para facilitar la identificación de los objetos en el administrador.</li>
+<li>Elegir <code>on_delete</code> según las reglas del negocio.</li>
+<li>Utilizar <code>related_name</code> cuando queramos controlar cómo se accede a la relación inversa.</li>
+<li>Ejecutar <code>makemigrations</code> y <code>migrate</code> después de modificar los modelos.</li>
+</ul>
+<h2 id="8-comandos-para-pruebas">8. Comandos para pruebas</h2>
+<pre><code class="language-python">from django.core.management.base import BaseCommand
+from call.models import Persona
+
+
+class Command(BaseCommand):
+    help = 'Comando de carga'
+    def handle(self, *args, **options):
+        persona = Persona(nombre=&quot;Fran&quot;,primer_apellido=&quot;Alia&quot;,segundo_apellido=&quot;Hernandez&quot;)
+        persona.save()
+</code></pre>
+<h2 id="ejercicio-vueling">Ejercicio VUELING</h2>
+<p>Queremos crear una nueva app llamada vueling para registrar los vuelos de los pasajeros. Para ello vamos a tener un catalogo con 20 ciudades. Son las siguientes:</p>
+<pre><code class="language-text">ID  Ciudad  Aeropuerto
+1   Madrid  Adolfo Suárez Madrid-Barajas
+2   Barcelona   Josep Tarradellas Barcelona-El Prat
+3   Málaga  Málaga-Costa del Sol
+4   Sevilla Sevilla-San Pablo
+5   Valencia    Valencia
+6   Alicante    Alicante-Elche Miguel Hernández
+7   Bilbao  Bilbao
+8   Palma de Mallorca   Palma de Mallorca
+9   Ibiza   Ibiza
+10  Santiago de Compostela  Santiago-Rosalía de Castro
+11  París   París-Charles de Gaulle
+12  Londres Heathrow
+13  Roma    Roma-Fiumicino
+14  Berlín  Berlín-Brandeburgo
+15  Ámsterdam   Schiphol
+16  Lisboa  Humberto Delgado
+17  Bruselas    Bruselas-Zaventem
+18  Nueva York  John F. Kennedy (JFK)
+19  Tokio   Haneda
+20  Dubái   Aeropuerto Internacional de Dubái
+</code></pre>
+<p>Vamos a tener una lista con 50 pasajeros, en el que se va a indicar el nombre, apellidos, fecha de nacimiento, tipo de identificacion (DNI, NIF) número de documento.</p>
+<p>Cuando un pasajero va a realizar un vuelo se registra la ciudad de origen, la ciudad de destino, hora de salida, hora de llegada y la referencia de vuelo.</p>
+<p>Establecer 3 vuelos con 10 pasajeros cada uno diferentes. Las referencias de vuelo son : REF001, REF002 y REF003.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
