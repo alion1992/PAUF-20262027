@@ -1,0 +1,1756 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Programación de Aplicaciones utilizando Frameworks">
+      
+      
+      
+      
+        <link rel="prev" href="../relaciones/">
+      
+      
+        <link rel="next" href="../vistas/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Consultas - PAUF</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#consultas-y-busquedas-con-django-orm" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="PAUF" class="md-header__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PAUF
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Consultas
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PAUF" class="md-nav__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PAUF
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-fundamentos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentos de programación Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-parte2-poo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orientación a objetos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios Clase
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ejercicios Clase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-fundamentos-parte1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios fundamentos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicio-la-liga/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios la liga
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-ficheros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios ficheros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../primeros_pasos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primeros pasos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relaciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-que-es-el-orm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ¿Qué es el ORM?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-obtener-todos-los-registros-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Obtener todos los registros: all()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-filtrar-registros-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Filtrar registros: filter()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Filtrar registros: filter()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combinar-condiciones-con-and" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combinar condiciones con AND
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-buscar-por-coincidencia-parcial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Buscar por coincidencia parcial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-busquedas-por-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Búsquedas por relaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Búsquedas por relaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-tareas-y-programadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1. Tareas y programadores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-tareas-sprints-y-proyectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2. Tareas, sprints y proyectos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-tareas-y-etiquetas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3. Tareas y etiquetas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-comparar-valores-y-fechas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Comparar valores y fechas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-busquedas-con-or-mediante-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Búsquedas con OR mediante Q
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-excluir-resultados-exclude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Excluir resultados: exclude()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-obtener-un-solo-objeto-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Obtener un solo objeto: get()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-ordenar-resultados-order_by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Ordenar resultados: order_by()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-limitar-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Limitar resultados
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-metodos-utiles-de-los-queryset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Métodos útiles de los QuerySet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-busqueda-desde-una-vista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Búsqueda desde una vista
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-actividades-propuestas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Actividades propuestas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Actividades propuestas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizaje
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vistas Django
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-que-es-el-orm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ¿Qué es el ORM?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-obtener-todos-los-registros-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Obtener todos los registros: all()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-filtrar-registros-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Filtrar registros: filter()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Filtrar registros: filter()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combinar-condiciones-con-and" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combinar condiciones con AND
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-buscar-por-coincidencia-parcial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Buscar por coincidencia parcial
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-busquedas-por-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Búsquedas por relaciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Búsquedas por relaciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-tareas-y-programadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1. Tareas y programadores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-tareas-sprints-y-proyectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2. Tareas, sprints y proyectos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-tareas-y-etiquetas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3. Tareas y etiquetas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-comparar-valores-y-fechas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Comparar valores y fechas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-busquedas-con-or-mediante-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Búsquedas con OR mediante Q
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-excluir-resultados-exclude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Excluir resultados: exclude()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-obtener-un-solo-objeto-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Obtener un solo objeto: get()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-ordenar-resultados-order_by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Ordenar resultados: order_by()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-limitar-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Limitar resultados
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-metodos-utiles-de-los-queryset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Métodos útiles de los QuerySet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-busqueda-desde-una-vista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Búsqueda desde una vista
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-actividades-propuestas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Actividades propuestas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Actividades propuestas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos-de-aprendizaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos de aprendizaje
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="consultas-y-busquedas-con-django-orm">Consultas y búsquedas con Django ORM</h1>
+<p>En esta clase aprenderemos a consultar, filtrar, ordenar y combinar resultados utilizando el ORM de Django. Trabajaremos con los modelos <code>Programador</code>, <code>Proyecto</code>, <code>Sprint</code>, <code>Etiqueta</code> y <code>Tarea</code>.</p>
+<h2 id="1-que-es-el-orm">1. ¿Qué es el ORM?</h2>
+<p>El ORM (<em>Object-Relational Mapper</em>) permite trabajar con la base de datos utilizando objetos y métodos de Python, sin tener que escribir SQL directamente en cada consulta.</p>
+<p>Por ejemplo:</p>
+<pre><code class="language-python">Tarea.objects.filter(completa=True)
+</code></pre>
+<p>Es una consulta que recupera las tareas cuyo campo <code>completa</code> vale <code>True</code>.</p>
+<p>Importa los modelos desde <code>models.py</code>:</p>
+<pre><code class="language-python">from .models import Programador, Proyecto, Sprint, Etiqueta, Tarea
+</code></pre>
+<p>Estos ejemplos se pueden ejecutar en una vista, en una función propia o desde la consola interactiva de Django:</p>
+<pre><code class="language-bash">python manage.py shell
+</code></pre>
+<h2 id="2-obtener-todos-los-registros-all">2. Obtener todos los registros: <code>all()</code></h2>
+<p>El método <code>all()</code> devuelve todos los registros de un modelo.</p>
+<pre><code class="language-python"># Todas las tareas
+tareas = Tarea.objects.all()
+
+# Todos los programadores
+programadores = Programador.objects.all()
+
+# Todos los proyectos
+proyectos = Proyecto.objects.all()
+</code></pre>
+<p>Podemos recorrer los resultados:</p>
+<pre><code class="language-python">for tarea in Tarea.objects.all():
+    print(tarea.nombre)
+</code></pre>
+<p><code>all()</code> devuelve un <code>QuerySet</code>, es decir, un conjunto de resultados de una consulta.</p>
+<h2 id="3-filtrar-registros-filter">3. Filtrar registros: <code>filter()</code></h2>
+<p>El método <code>filter()</code> devuelve los registros que cumplen las condiciones indicadas.</p>
+<pre><code class="language-python"># Tareas completas
+Tarea.objects.filter(completa=True)
+
+# Tareas pendientes
+Tarea.objects.filter(completa=False)
+
+# Programadores llamados Ana
+Programador.objects.filter(nombre=&quot;Ana&quot;)
+
+# Proyectos con un nombre exacto
+Proyecto.objects.filter(nombre=&quot;Aplicación Web&quot;)
+
+# Tareas asignadas al programador con ID 1
+Tarea.objects.filter(programador_id=1)
+</code></pre>
+<h3 id="combinar-condiciones-con-and">Combinar condiciones con AND</h3>
+<p>Si pasamos varias condiciones a <code>filter()</code>, todas deben cumplirse.</p>
+<pre><code class="language-python"># Tareas completas cuyo nombre es &quot;Diseño&quot;
+Tarea.objects.filter(completa=True, nombre=&quot;Diseño&quot;)
+
+# Tareas pendientes del programador con ID 2
+Tarea.objects.filter(completa=False, programador_id=2)
+</code></pre>
+<h2 id="4-buscar-por-coincidencia-parcial">4. Buscar por coincidencia parcial</h2>
+<p>Django permite buscar textos con distintos <em>lookups</em>. Se escriben después del nombre del campo y dos guiones bajos (<code>__</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Lookup</th>
+<th>Significado</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exact</code></td>
+<td>Coincidencia exacta</td>
+<td><code>nombre__exact="Diseño"</code></td>
+</tr>
+<tr>
+<td><code>iexact</code></td>
+<td>Coincidencia exacta sin distinguir mayúsculas</td>
+<td><code>nombre__iexact="diseño"</code></td>
+</tr>
+<tr>
+<td><code>contains</code></td>
+<td>Contiene el texto</td>
+<td><code>nombre__contains="API"</code></td>
+</tr>
+<tr>
+<td><code>icontains</code></td>
+<td>Contiene el texto sin distinguir mayúsculas</td>
+<td><code>nombre__icontains="api"</code></td>
+</tr>
+<tr>
+<td><code>startswith</code></td>
+<td>Empieza por el texto</td>
+<td><code>nombre__startswith="Crear"</code></td>
+</tr>
+<tr>
+<td><code>istartswith</code></td>
+<td>Empieza por el texto sin distinguir mayúsculas</td>
+<td><code>nombre__istartswith="crear"</code></td>
+</tr>
+<tr>
+<td><code>endswith</code></td>
+<td>Termina por el texto</td>
+<td><code>nombre__endswith="web"</code></td>
+</tr>
+<tr>
+<td><code>iendswith</code></td>
+<td>Termina por el texto sin distinguir mayúsculas</td>
+<td><code>nombre__iendswith="WEB"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Ejemplos:</p>
+<pre><code class="language-python"># Tareas cuyo nombre contiene &quot;api&quot;
+Tarea.objects.filter(nombre__icontains=&quot;api&quot;)
+
+# Programadores cuyo nombre empieza por &quot;mar&quot;
+Programador.objects.filter(nombre__istartswith=&quot;mar&quot;)
+
+# Proyectos cuyo nombre contiene &quot;web&quot;
+Proyecto.objects.filter(nombre__icontains=&quot;web&quot;)
+
+# Etiquetas que terminan en &quot;bug&quot;
+Etiqueta.objects.filter(nombre__iendswith=&quot;bug&quot;)
+</code></pre>
+<p>La sensibilidad a mayúsculas y minúsculas de algunos lookups puede depender de la base de datos utilizada.</p>
+<h2 id="5-busquedas-por-relaciones">5. Búsquedas por relaciones</h2>
+<p>Podemos atravesar relaciones entre modelos utilizando <code>__</code>.</p>
+<h3 id="51-tareas-y-programadores">5.1. Tareas y programadores</h3>
+<p><code>Tarea</code> tiene una clave foránea hacia <code>Programador</code>.</p>
+<pre><code class="language-python"># Tareas de Ana
+Tarea.objects.filter(programador__nombre=&quot;Ana&quot;)
+
+# Tareas de programadores cuyo nombre contiene &quot;an&quot;
+Tarea.objects.filter(programador__nombre__icontains=&quot;an&quot;)
+
+# Tareas de programadores cuyo primer apellido es García
+Tarea.objects.filter(programador__apellido1=&quot;García&quot;)
+</code></pre>
+<p>También podemos buscar directamente por el identificador de la clave foránea:</p>
+<pre><code class="language-python">Tarea.objects.filter(programador_id=1)
+</code></pre>
+<h3 id="52-tareas-sprints-y-proyectos">5.2. Tareas, sprints y proyectos</h3>
+<p>La relación entre <code>Tarea</code> y <code>Proyecto</code> pasa por <code>Sprint</code>.</p>
+<pre><code class="language-python"># Tareas del proyecto con ID 1
+Tarea.objects.filter(sprint__proyecto_id=1)
+
+# Tareas del proyecto &quot;Aplicación Web&quot;
+Tarea.objects.filter(sprint__proyecto__nombre=&quot;Aplicación Web&quot;)
+
+# Tareas de proyectos cuyo nombre contiene &quot;web&quot;
+Tarea.objects.filter(sprint__proyecto__nombre__icontains=&quot;web&quot;)
+
+# Sprints del proyecto con ID 1
+Sprint.objects.filter(proyecto_id=1)
+</code></pre>
+<p>La expresión <code>sprint__proyecto__nombre</code> significa: desde la tarea, acceder al sprint relacionado, después al proyecto y finalmente a su nombre.</p>
+<h3 id="53-tareas-y-etiquetas">5.3. Tareas y etiquetas</h3>
+<p><code>Tarea</code> tiene una relación muchos a muchos con <code>Etiqueta</code>.</p>
+<pre><code class="language-python"># Tareas con la etiqueta &quot;Urgente&quot;
+Tarea.objects.filter(etiquetas__nombre=&quot;Urgente&quot;)
+
+# Tareas con alguna etiqueta que contenga &quot;bug&quot;
+Tarea.objects.filter(etiquetas__nombre__icontains=&quot;bug&quot;)
+</code></pre>
+<p>Una tarea puede tener varias etiquetas. Si una consulta a través de una relación muchos a muchos produce resultados duplicados, podemos utilizar <code>distinct()</code>:</p>
+<pre><code class="language-python">Tarea.objects.filter(
+    etiquetas__nombre__icontains=&quot;bug&quot;
+).distinct()
+</code></pre>
+<p>Para obtener las etiquetas de una tarea concreta:</p>
+<pre><code class="language-python">tarea = Tarea.objects.get(id=1)
+
+for etiqueta in tarea.etiquetas.all():
+    print(etiqueta.nombre)
+</code></pre>
+<h2 id="6-comparar-valores-y-fechas">6. Comparar valores y fechas</h2>
+<p>Los <em>lookups</em> de comparación permiten filtrar fechas y otros valores.</p>
+<table>
+<thead>
+<tr>
+<th>Lookup</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gt</code></td>
+<td>Mayor que</td>
+</tr>
+<tr>
+<td><code>gte</code></td>
+<td>Mayor o igual que</td>
+</tr>
+<tr>
+<td><code>lt</code></td>
+<td>Menor que</td>
+</tr>
+<tr>
+<td><code>lte</code></td>
+<td>Menor o igual que</td>
+</tr>
+<tr>
+<td><code>in</code></td>
+<td>Pertenece a una lista de valores</td>
+</tr>
+<tr>
+<td><code>isnull</code></td>
+<td>Es nulo</td>
+</tr>
+</tbody>
+</table>
+<p>Ejemplos con los campos de fecha de <code>Tarea</code>:</p>
+<pre><code class="language-python"># Tareas iniciadas a partir del 1 de octubre de 2026
+Tarea.objects.filter(fecha_inicio__gte=&quot;2026-10-01&quot;)
+
+# Tareas finalizadas antes del 1 de noviembre de 2026
+Tarea.objects.filter(fecha_fin__lt=&quot;2026-11-01&quot;)
+
+# Tareas sin fecha de finalización
+Tarea.objects.filter(fecha_fin__isnull=True)
+
+# Tareas con fecha de finalización
+Tarea.objects.filter(fecha_fin__isnull=False)
+
+# Tareas iniciadas durante 2026
+Tarea.objects.filter(fecha_inicio__year=2026)
+
+# Tareas cuyo ID es 1, 3 o 5
+Tarea.objects.filter(id__in=[1, 3, 5])
+</code></pre>
+<p>Como <code>fecha_inicio</code> y <code>fecha_fin</code> permiten valores nulos, <code>isnull=True</code> resulta útil para localizar tareas sin esa fecha.</p>
+<h2 id="7-busquedas-con-or-mediante-q">7. Búsquedas con OR mediante <code>Q</code></h2>
+<p>Por defecto, varias condiciones en <code>filter()</code> se combinan con AND. Para expresar OR utilizamos <code>Q</code>.</p>
+<pre><code class="language-python">from django.db.models import Q
+
+# Tareas completas O tareas cuyo nombre contiene &quot;api&quot;
+Tarea.objects.filter(
+    Q(completa=True) | Q(nombre__icontains=&quot;api&quot;)
+)
+</code></pre>
+<p>Otro ejemplo:</p>
+<pre><code class="language-python"># Programadores llamados Ana O cuyo apellido es García
+Programador.objects.filter(
+    Q(nombre=&quot;Ana&quot;) | Q(apellido1=&quot;García&quot;)
+)
+</code></pre>
+<p>Los operadores principales son:</p>
+<ul>
+<li><code>|</code>: OR, basta con cumplir una condición.</li>
+<li><code>&amp;</code>: AND, deben cumplirse ambas condiciones.</li>
+<li><code>~</code>: NOT, niega una condición.</li>
+</ul>
+<p>Ejemplo con NOT:</p>
+<pre><code class="language-python"># Tareas cuyo nombre no contiene &quot;api&quot;
+Tarea.objects.filter(~Q(nombre__icontains=&quot;api&quot;))
+</code></pre>
+<p>También podemos combinar condiciones con paréntesis para controlar cómo se agrupan:</p>
+<pre><code class="language-python"># Tareas completas cuyo nombre contiene &quot;api&quot;,
+# o tareas pendientes asignadas al programador con ID 1
+Tarea.objects.filter(
+    Q(completa=True, nombre__icontains=&quot;api&quot;)
+    | Q(completa=False, programador_id=1)
+)
+</code></pre>
+<h2 id="8-excluir-resultados-exclude">8. Excluir resultados: <code>exclude()</code></h2>
+<p><code>exclude()</code> devuelve los registros que no cumplen las condiciones indicadas.</p>
+<pre><code class="language-python"># Tareas que no están completas
+Tarea.objects.exclude(completa=True)
+
+# Programadores cuyo nombre no es Ana
+Programador.objects.exclude(nombre=&quot;Ana&quot;)
+
+# Tareas que no pertenecen al proyecto con ID 1
+Tarea.objects.exclude(sprint__proyecto_id=1)
+</code></pre>
+<p>Ten en cuenta que las relaciones opcionales pueden contener valores nulos. Si necesitas un comportamiento concreto para tareas sin sprint o sprints sin proyecto, comprueba expresamente esos casos.</p>
+<h2 id="9-obtener-un-solo-objeto-get">9. Obtener un solo objeto: <code>get()</code></h2>
+<p><code>get()</code> se utiliza cuando esperamos encontrar exactamente un registro.</p>
+<pre><code class="language-python">tarea = Tarea.objects.get(id=1)
+
+print(tarea.nombre)
+print(tarea.completa)
+</code></pre>
+<p>Si no existe ningún registro, se produce <code>Tarea.DoesNotExist</code>. Si la consulta devuelve varios registros, se produce <code>Tarea.MultipleObjectsReturned</code>.</p>
+<p>Para gestionar la ausencia de un objeto en una vista, podemos utilizar <code>get_object_or_404()</code>:</p>
+<pre><code class="language-python">from django.shortcuts import get_object_or_404
+
+tarea = get_object_or_404(Tarea, id=1)
+</code></pre>
+<p>Diferencia importante:</p>
+<pre><code class="language-python">Tarea.objects.filter(id=1)  # Devuelve un QuerySet
+Tarea.objects.get(id=1)     # Devuelve un objeto Tarea
+</code></pre>
+<h2 id="10-ordenar-resultados-order_by">10. Ordenar resultados: <code>order_by()</code></h2>
+<pre><code class="language-python"># Orden alfabético por nombre
+Tarea.objects.order_by(&quot;nombre&quot;)
+
+# Orden alfabético inverso
+Tarea.objects.order_by(&quot;-nombre&quot;)
+
+# Orden por fecha de inicio
+Tarea.objects.order_by(&quot;fecha_inicio&quot;)
+
+# Ordenar por estado y después por nombre
+Tarea.objects.order_by(&quot;completa&quot;, &quot;nombre&quot;)
+
+# Ordenar por nombre del programador
+Tarea.objects.order_by(&quot;programador__nombre&quot;)
+</code></pre>
+<p>Un signo menos (<code>-</code>) delante del campo indica orden descendente.</p>
+<h2 id="11-limitar-resultados">11. Limitar resultados</h2>
+<p>Podemos utilizar <em>slicing</em> para obtener una parte de los resultados.</p>
+<pre><code class="language-python"># Primeras cinco tareas
+Tarea.objects.all()[:5]
+
+# Registros de la sexta a la décima posición
+Tarea.objects.all()[5:10]
+
+# Cinco tareas más recientes con fecha de inicio
+Tarea.objects.filter(
+    fecha_inicio__isnull=False
+).order_by(&quot;-fecha_inicio&quot;)[:5]
+</code></pre>
+<p>Es recomendable definir un orden cuando necesitamos que los resultados aparezcan de forma predecible.</p>
+<h2 id="12-metodos-utiles-de-los-queryset">12. Métodos útiles de los QuerySet</h2>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Para qué sirve</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>count()</code></td>
+<td>Cuenta resultados</td>
+<td><code>Tarea.objects.filter(completa=True).count()</code></td>
+</tr>
+<tr>
+<td><code>exists()</code></td>
+<td>Comprueba si hay resultados</td>
+<td><code>Tarea.objects.filter(completa=False).exists()</code></td>
+</tr>
+<tr>
+<td><code>first()</code></td>
+<td>Devuelve el primer objeto o <code>None</code></td>
+<td><code>Tarea.objects.order_by("nombre").first()</code></td>
+</tr>
+<tr>
+<td><code>last()</code></td>
+<td>Devuelve el último objeto o <code>None</code></td>
+<td><code>Tarea.objects.order_by("nombre").last()</code></td>
+</tr>
+<tr>
+<td><code>values()</code></td>
+<td>Devuelve diccionarios con los campos seleccionados</td>
+<td><code>Tarea.objects.values("id", "nombre")</code></td>
+</tr>
+<tr>
+<td><code>values_list()</code></td>
+<td>Devuelve tuplas o valores de los campos seleccionados</td>
+<td><code>Tarea.objects.values_list("nombre", flat=True)</code></td>
+</tr>
+<tr>
+<td><code>distinct()</code></td>
+<td>Elimina duplicados</td>
+<td><code>Tarea.objects.filter(etiquetas__nombre="Bug").distinct()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Ejemplos:</p>
+<pre><code class="language-python"># Número de tareas pendientes del programador 1
+Tarea.objects.filter(
+    programador_id=1,
+    completa=False
+).count()
+
+# Comprobar si el proyecto 1 tiene sprints
+Sprint.objects.filter(proyecto_id=1).exists()
+
+# Obtener solo los nombres de las tareas
+Tarea.objects.values_list(&quot;nombre&quot;, flat=True)
+</code></pre>
+<h2 id="13-busqueda-desde-una-vista">13. Búsqueda desde una vista</h2>
+<p>Vamos a crear una vista que permita buscar tareas por nombre y estado.</p>
+<p>En <code>views.py</code>:</p>
+<pre><code class="language-python">from django.shortcuts import render
+from .models import Tarea
+
+
+def buscar_tareas(request):
+    nombre = request.GET.get(&quot;nombre&quot;, &quot;&quot;).strip()
+    estado = request.GET.get(&quot;estado&quot;, &quot;&quot;)
+
+    tareas = Tarea.objects.all()
+
+    if nombre:
+        tareas = tareas.filter(nombre__icontains=nombre)
+
+    if estado == &quot;completas&quot;:
+        tareas = tareas.filter(completa=True)
+    elif estado == &quot;pendientes&quot;:
+        tareas = tareas.filter(completa=False)
+
+    tareas = tareas.order_by(&quot;nombre&quot;)
+
+    return render(
+        request,
+        &quot;tareas/buscar.html&quot;,
+        {
+            &quot;tareas&quot;: tareas,
+            &quot;nombre&quot;: nombre,
+            &quot;estado&quot;: estado,
+        }
+    )
+</code></pre>
+<p>En <code>urls.py</code>:</p>
+<pre><code class="language-python">from django.urls import path
+from . import views
+
+urlpatterns = [
+    path(&quot;tareas/buscar/&quot;, views.buscar_tareas, name=&quot;buscar_tareas&quot;),
+]
+</code></pre>
+<p>Plantilla <code>templates/tareas/buscar.html</code>:</p>
+<pre><code class="language-html">&lt;h1&gt;Buscar tareas&lt;/h1&gt;
+
+&lt;form method=&quot;get&quot;&gt;
+    &lt;label for=&quot;nombre&quot;&gt;Nombre:&lt;/label&gt;
+    &lt;input
+        type=&quot;text&quot;
+        id=&quot;nombre&quot;
+        name=&quot;nombre&quot;
+        value=&quot;{{ nombre }}&quot;
+    &gt;
+
+    &lt;label for=&quot;estado&quot;&gt;Estado:&lt;/label&gt;
+    &lt;select id=&quot;estado&quot; name=&quot;estado&quot;&gt;
+        &lt;option value=&quot;&quot;&gt;Todas&lt;/option&gt;
+        &lt;option value=&quot;completas&quot;
+            {% if estado == &quot;completas&quot; %}selected{% endif %}&gt;
+            Completas
+        &lt;/option&gt;
+        &lt;option value=&quot;pendientes&quot;
+            {% if estado == &quot;pendientes&quot; %}selected{% endif %}&gt;
+            Pendientes
+        &lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;button type=&quot;submit&quot;&gt;Buscar&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;ul&gt;
+    {% for tarea in tareas %}
+        &lt;li&gt;
+            {{ tarea.nombre }} -
+            {% if tarea.completa %}Completa{% else %}Pendiente{% endif %}
+        &lt;/li&gt;
+    {% empty %}
+        &lt;li&gt;No se han encontrado tareas.&lt;/li&gt;
+    {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+<p>La búsqueda utiliza GET, por lo que los parámetros aparecen en la URL. Por ejemplo:</p>
+<pre><code class="language-text">/tareas/buscar/?nombre=api&amp;estado=pendientes
+</code></pre>
+<p>La vista lee los parámetros, aplica los filtros y envía los resultados a la plantilla.</p>
+<h2 id="14-actividades-propuestas">14. Actividades propuestas</h2>
+<p>Implementa consultas para resolver estas tareas:</p>
+<ol>
+<li>Buscar programadores cuyo apellido contenga un texto.</li>
+<li>Buscar proyectos cuyo nombre empiece por una palabra.</li>
+<li>Mostrar los sprints de un proyecto concreto.</li>
+<li>Mostrar las tareas pendientes de un programador.</li>
+<li>Buscar tareas que tengan una etiqueta determinada.</li>
+<li>Buscar tareas iniciadas a partir de una fecha.</li>
+<li>Obtener tareas completas cuyo nombre contenga <code>"api"</code> <strong>o</strong> tareas pendientes asignadas al programador con ID 1.</li>
+<li>Mostrar las cinco tareas más recientes que tengan fecha de inicio.</li>
+<li>Contar cuántas tareas tiene un programador.</li>
+<li>Crear una vista con un formulario GET que permita filtrar por nombre, estado y proyecto.</li>
+</ol>
+<h3 id="objetivos-de-aprendizaje">Objetivos de aprendizaje</h3>
+<p>Al terminar la práctica, el alumnado debe saber:</p>
+<ul>
+<li>Obtener registros con <code>all()</code> y <code>filter()</code>.</li>
+<li>Buscar textos con <code>icontains</code>, <code>startswith</code> y otros <em>lookups</em>.</li>
+<li>Consultar modelos relacionados mediante <code>__</code>.</li>
+<li>Comparar fechas y gestionar valores nulos.</li>
+<li>Combinar condiciones con <code>Q</code>, <code>exclude()</code> y varios filtros.</li>
+<li>Ordenar, limitar y contar resultados.</li>
+<li>Utilizar consultas del ORM desde una vista Django.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
