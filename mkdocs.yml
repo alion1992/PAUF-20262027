@@ -18,5 +18,7 @@ nav:
     - Introducción: unidad2/introduccion.md
     - Primeros pasos: unidad2/primeros_pasos.md
     - Relaciones: unidad2/relaciones.md
+    - Consultas: unidad2/consultas.md
+    - Vistas Django: unidad2/vistas.md
      
      
