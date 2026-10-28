@@ -1,53 +1,44 @@
 # Vistas en Django: GET, POST, PUT, PATCH y DELETE
 
-En esta clase aprenderemos a crear vistas Django que reciban peticiones HTTP, consulten los modelos y permitan listar, crear, actualizar y eliminar registros.
+En esta clase vamos a crear vistas basadas en funciones para trabajar con los modelos `Programador`, `Proyecto`, `Sprint`, `Etiqueta` y `Tarea` de nuestra aplicación Scrum. Utilizaremos el ORM de Django, JSON, `JsonResponse` y los códigos HTTP habituales.
 
-Trabajaremos con los modelos `Programador`, `Proyecto`, `Sprint`, `Etiqueta` y `Tarea` de la práctica.
+> Los ejemplos son didácticos. En una aplicación real también hay que configurar autenticación, permisos y validación completa de los datos.
 
 ## 1. ¿Qué es una vista?
 
-Una vista es una función o una clase de Python que recibe una petición HTTP y devuelve una respuesta HTTP.
-
-El flujo habitual de una petición es:
-
-1. El cliente solicita una URL.
-2. Django busca la URL en `urls.py`.
-3. La URL dirige la petición a una vista.
-4. La vista consulta o modifica los modelos si es necesario.
-5. La vista devuelve una respuesta.
-
-Las respuestas pueden ser HTML, JSON, una redirección o un error HTTP.
-
-## 2. Crear una primera vista
-
-En el archivo `views.py` de la aplicación:
+Una vista es una función de Python que recibe una petición HTTP (`request`) y devuelve una respuesta HTTP.
 
 ```python
 from django.http import HttpResponse
-
 
 def inicio(request):
     return HttpResponse("Bienvenido a mi aplicación Django")
 ```
 
-- `request` contiene la información de la petición.
-- `HttpResponse` devuelve una respuesta HTTP.
-- La vista debe devolver una respuesta al cliente.
+- `request` contiene información de la petición.
+- `HttpResponse` devuelve texto.
+- `JsonResponse` permite devolver datos en formato JSON.
 
-### Asociar una URL a la vista
+## 2. Configurar las URL
 
-En el `urls.py` de la aplicación:
+En `scrum/urls.py` definiremos las rutas de la aplicación:
 
 ```python
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.inicio, name="inicio"),
+    path("hola/", views.inicio, name="inicio"),
+    path("tareas/", views.listar_tareas, name="tareas"),
+    path("tarea/<int:id>/", views.listar_tarea_concreta, name="tarea_concreta"),
+    path("tareas/crear/", views.crear_tarea, name="crear_tarea"),
+    path("tareas/<int:id>/actualizar/", views.actualizar_tarea, name="actualizar_tarea"),
+    path("tareas/<int:id>/parcial/", views.actualizar_tarea_parcial, name="actualizar_tarea_parcial"),
+    path("tareas/<int:id>/eliminar/", views.eliminar_tarea, name="eliminar_tarea"),
 ]
 ```
 
-Si la aplicación se llama `tareas`, en el `urls.py` principal del proyecto se puede incluir así:
+En el `urls.py` principal del proyecto:
 
 ```python
 from django.contrib import admin
@@ -55,31 +46,25 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("tareas.urls")),
+    path("api/", include("scrum.urls")),
 ]
 ```
 
-Cambia `tareas` por el nombre real de tu aplicación.
+Como el proyecto incluye `scrum.urls` bajo el prefijo `api/`, la ruta `tareas/` se convierte en `/api/tareas/`.
 
-## 3. Los métodos HTTP
-
-Los métodos HTTP indican qué operación quiere realizar el cliente.
+## 3. Métodos HTTP
 
 | Método | Uso habitual |
 |---|---|
 | `GET` | Consultar información |
-| `POST` | Enviar datos; se usa a menudo para crear recursos |
-| `PUT` | Sustituir o actualizar un recurso completo en una API |
-| `PATCH` | Modificar parcialmente un recurso en una API |
-| `DELETE` | Eliminar un recurso en una API |
+| `POST` | Crear un recurso |
+| `PUT` | Actualizar el recurso completo |
+| `PATCH` | Actualizar parte de un recurso |
+| `DELETE` | Eliminar un recurso |
 
-En una aplicación web tradicional, los formularios HTML utilizan normalmente GET o POST. Los formularios HTML no admiten directamente PUT, PATCH ni DELETE como valores de `method`; estos métodos suelen utilizarse en APIs o mediante mecanismos adicionales.
+## 4. Consultar todas las tareas: GET
 
-## 4. Consultar datos con GET
-
-`GET` se utiliza para obtener información. Para devolver datos en JSON podemos utilizar `JsonResponse`.
-
-### 4.1. Listar todas las tareas
+`Tarea.objects.all()` devuelve objetos `Tarea`. Para una consulta sencilla que podamos convertir directamente a JSON, podemos utilizar `values()`, que devuelve los campos como diccionarios.
 
 ```python
 from django.http import JsonResponse
@@ -89,146 +74,95 @@ from .models import Tarea
 def listar_tareas(request):
     if request.method != "GET":
         return JsonResponse(
-            {"error": "Método no permitido"},
+            {"error": "Operación no permitida"},
             status=405
         )
 
-    tareas = Tarea.objects.all()
-
-    datos = [
-        {
-            "id": tarea.id,
-            "nombre": tarea.nombre,
-            "fecha_inicio": (
-                tarea.fecha_inicio.isoformat()
-                if tarea.fecha_inicio else None
-            ),
-            "fecha_fin": (
-                tarea.fecha_fin.isoformat()
-                if tarea.fecha_fin else None
-            ),
-            "completa": tarea.completa,
-            "sprint_id": tarea.sprint_id,
-            "programador_id": tarea.programador_id,
-        }
-        for tarea in tareas
-    ]
-
-    return JsonResponse(datos, safe=False)
+    tareas = Tarea.objects.values()
+    return JsonResponse(list(tareas), safe=False)
 ```
 
-`JsonResponse` espera por defecto un diccionario. Utilizamos `safe=False` para devolver una lista como respuesta principal.
+- `values()` obtiene los campos de las tareas como diccionarios.
+- `list()` convierte el `QuerySet` en una lista.
+- `safe=False` permite que `JsonResponse` devuelva una lista en lugar de un diccionario.
+- No hace falta escribir `.all().values()`: `values()` sin filtros ya consulta todos los registros.
 
-### 4.2. Obtener una tarea por su ID
+La respuesta será una lista similar a esta:
+
+```json
+[
+    {
+        "id": 1,
+        "nombre": "Preparar el login",
+        "fecha_inicio": "2026-10-28",
+        "fecha_fin": null,
+        "completa": false,
+        "sprint_id": 1,
+        "programador_id": 2
+    }
+]
+```
+
+Los valores concretos dependerán de la base de datos.
+
+## 5. Consultar una tarea por su ID: GET
+
+Para obtener una sola tarea utilizaremos `filter()`, `values()` y `first()`.
 
 ```python
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
-from .models import Tarea
-
-
-def detalle_tarea(request, id):
+def listar_tarea_concreta(request, id):
     if request.method != "GET":
         return JsonResponse(
-            {"error": "Método no permitido"},
+            {"error": "Operación no permitida"},
             status=405
         )
 
-    tarea = get_object_or_404(Tarea, pk=id)
+    tarea = Tarea.objects.filter(id=id).values().first()
 
-    datos = {
-        "id": tarea.id,
-        "nombre": tarea.nombre,
-        "completa": tarea.completa,
-        "programador_id": tarea.programador_id,
-        "sprint_id": tarea.sprint_id,
-        "etiquetas": list(
-            tarea.etiquetas.values_list("id", flat=True)
-        ),
-    }
-
-    return JsonResponse(datos)
-```
-
-`get_object_or_404()` devuelve el objeto si existe o una respuesta HTTP 404 si no se encuentra.
-
-## 5. Crear registros con POST
-
-Para crear una tarea recibiremos los datos mediante POST. En este ejemplo, los datos llegan desde un formulario HTML.
-
-```python
-from django.views.decorators.http import require_POST
-from django.http import JsonResponse
-from .models import Tarea
-
-
-@require_POST
-def crear_tarea(request):
-    nombre = request.POST.get("nombre", "").strip()
-
-    if not nombre:
+    if tarea is None:
         return JsonResponse(
-            {"error": "El nombre es obligatorio"},
-            status=400
+            {"error": "Tarea no encontrada"},
+            status=404
         )
 
-    tarea = Tarea.objects.create(nombre=nombre)
-
-    return JsonResponse(
-        {
-            "mensaje": "Tarea creada",
-            "id": tarea.id,
-            "nombre": tarea.nombre,
-        },
-        status=201
-    )
+    return JsonResponse(tarea)
 ```
 
-Aspectos importantes:
+- `filter(id=id)` busca por el identificador recibido en la URL.
+- `values()` convierte los campos en diccionarios.
+- `first()` devuelve un único diccionario o `None` si no hay resultados.
+- `JsonResponse(tarea)` devuelve directamente el diccionario.
 
-- `request.POST.get()` obtiene un campo enviado mediante un formulario POST.
-- `strip()` elimina los espacios al principio y al final.
-- `objects.create()` crea y guarda el registro.
-- El código HTTP `201 Created` indica que se ha creado un recurso.
-- `@require_POST` limita la vista al método POST.
+**¿Por qué aquí no usamos `list()` ni `safe=False`?** Porque devolvemos un único diccionario. Para varias tareas devolvemos una lista; para una tarea, un diccionario.
 
-El modelo permite que otros campos de la tarea queden vacíos o usen sus valores por defecto. Si se quieren aceptar más campos, hay que validarlos antes de guardarlos.
+Ejemplo de URL: `/api/tarea/45/`.
 
-### Formulario HTML de ejemplo
+## 6. Crear una tarea: POST y JSON
 
-```html
-<form method="post" action="/api/tareas/crear/">
-    {% csrf_token %}
-
-    <label for="nombre">Nombre de la tarea:</label>
-    <input type="text" id="nombre" name="nombre" required>
-
-    <button type="submit">Crear tarea</button>
-</form>
-```
-
-En una aplicación web con formularios Django, el token CSRF ayuda a proteger las operaciones que modifican datos. No desactives esta protección sin una razón justificada.
-
-## 6. Leer datos JSON en una petición POST
-
-Cuando desarrollamos una API que recibe JSON, `request.POST` no es el mecanismo adecuado para leer el cuerpo JSON. Podemos utilizar `json.loads(request.body)`.
+Para crear una tarea enviaremos un JSON en el cuerpo de la petición. En este ejemplo usamos `@csrf_exempt` para simplificar las pruebas de una API independiente con Postman. Más adelante hay que configurar correctamente la seguridad.
 
 ```python
 import json
+from json import JSONDecodeError
 
-from django.views.decorators.http import require_POST
 from django.http import JsonResponse
-from django.core.exceptions import ValidationError
-from .models import Tarea
+from django.views.decorators.csrf import csrf_exempt
+from .models import Tarea, Sprint, Programador
 
 
-@require_POST
-def crear_tarea_json(request):
+@csrf_exempt
+def crear_tarea(request):
+    if request.method != "POST":
+        return JsonResponse(
+            {"error": "Operación no permitida"},
+            status=405
+        )
+
     try:
         datos = json.loads(request.body)
-    except (json.JSONDecodeError, UnicodeDecodeError):
+    except (JSONDecodeError, UnicodeDecodeError):
         return JsonResponse(
-            {"error": "El cuerpo debe contener JSON válido"},
+            {"error": "JSON inválido"},
             status=400
         )
 
@@ -238,55 +172,99 @@ def crear_tarea_json(request):
             status=400
         )
 
-    nombre = datos.get("nombre", "")
+    nombre = datos.get("nombre")
     if not isinstance(nombre, str) or not nombre.strip():
         return JsonResponse(
             {"error": "El nombre es obligatorio"},
             status=400
         )
 
-    tarea = Tarea.objects.create(nombre=nombre.strip())
+    sprint_id = datos.get("sprint_id")
+    if sprint_id is not None and not Sprint.objects.filter(id=sprint_id).exists():
+        return JsonResponse(
+            {"error": "El sprint no existe"},
+            status=400
+        )
+
+    programador_id = datos.get("programador_id")
+    if programador_id is not None and not Programador.objects.filter(id=programador_id).exists():
+        return JsonResponse(
+            {"error": "El programador no existe"},
+            status=400
+        )
+
+    nueva_tarea = Tarea.objects.create(
+        nombre=nombre.strip(),
+        fecha_inicio=datos.get("fecha_inicio"),
+        fecha_fin=datos.get("fecha_fin"),
+        completa=datos.get("completa", False),
+        sprint_id=sprint_id,
+        programador_id=programador_id
+    )
 
     return JsonResponse(
-        {"id": tarea.id, "nombre": tarea.nombre},
+        {
+            "mensaje": "Tarea creada correctamente",
+            "id": nueva_tarea.id
+        },
         status=201
     )
 ```
 
-Una petición de ejemplo podría enviar este JSON:
+### Entender el POST
+
+1. Comprobamos que el método sea `POST`.
+2. `json.loads(request.body)` convierte el cuerpo JSON en un objeto Python.
+3. Controlamos los errores de JSON y comprobamos que recibimos un diccionario.
+4. Validamos el nombre.
+5. Comprobamos que el sprint y el programador existan si se han indicado.
+6. `Tarea.objects.create(...)` crea y guarda la tarea automáticamente; no hace falta llamar después a `save()`.
+
+### JSON para probar el POST
+
+En Postman selecciona `POST` → `Body` → `raw` → `JSON`.
 
 ```json
 {
-  "nombre": "Preparar presentación"
+    "nombre": "Desarrollar el login",
+    "fecha_inicio": "2026-10-28",
+    "fecha_fin": null,
+    "completa": false,
+    "sprint_id": 1,
+    "programador_id": 2
 }
 ```
 
-En una API real, valida también los tipos y los valores de todos los campos recibidos, las relaciones y los permisos del usuario.
+Los identificadores deben existir. Como sprint y programador son opcionales en el modelo, puedes omitirlos o enviar `null`.
 
-## 7. Actualizar un registro con PUT o PATCH
+### ¿Se pueden mapear automáticamente los campos?
 
-PUT suele representar la actualización completa de un recurso y PATCH una actualización parcial. Django no impone una implementación única: debemos definir el comportamiento en nuestra vista.
-
-El siguiente ejemplo permite modificar parcialmente el nombre y el estado de una tarea mediante PATCH.
+Python permite desempaquetar un diccionario con `**`:
 
 ```python
-import json
+Tarea.objects.create(**datos)
+```
 
-from django.views.decorators.http import require_http_methods
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
-from .models import Tarea
+Pero no conviene pasar directamente todo el JSON recibido a `create()`: el cliente podría enviar campos que no queremos aceptar y las relaciones requieren un tratamiento adecuado. Es preferible validar y seleccionar los campos permitidos.
 
+## 7. Actualizar una tarea: PUT
 
-@require_http_methods(["PATCH"])
+Para actualizar una tarea existente, la buscamos por su ID, modificamos sus atributos y llamamos a `save()`. En este ejemplo, PUT exige el nombre y espera que se envíe el estado de todos los campos editables, incluidos los opcionales que se quieran conservar.
+
+```python
+@csrf_exempt
 def actualizar_tarea(request, id):
-    tarea = get_object_or_404(Tarea, pk=id)
+    if request.method != "PUT":
+        return JsonResponse(
+            {"error": "Operación no permitida"},
+            status=405
+        )
 
     try:
         datos = json.loads(request.body)
-    except (json.JSONDecodeError, UnicodeDecodeError):
+    except (JSONDecodeError, UnicodeDecodeError):
         return JsonResponse(
-            {"error": "JSON no válido"},
+            {"error": "JSON inválido"},
             status=400
         )
 
@@ -296,113 +274,198 @@ def actualizar_tarea(request, id):
             status=400
         )
 
+    tarea = Tarea.objects.filter(id=id).first()
+    if tarea is None:
+        return JsonResponse(
+            {"error": "Tarea no encontrada"},
+            status=404
+        )
+
+    nombre = datos.get("nombre")
+    if not isinstance(nombre, str) or not nombre.strip():
+        return JsonResponse(
+            {"error": "El nombre es obligatorio"},
+            status=400
+        )
+
+    sprint_id = datos.get("sprint_id")
+    if sprint_id is not None and not Sprint.objects.filter(id=sprint_id).exists():
+        return JsonResponse(
+            {"error": "El sprint no existe"},
+            status=400
+        )
+
+    programador_id = datos.get("programador_id")
+    if programador_id is not None and not Programador.objects.filter(id=programador_id).exists():
+        return JsonResponse(
+            {"error": "El programador no existe"},
+            status=400
+        )
+
+    tarea.nombre = nombre.strip()
+    tarea.fecha_inicio = datos.get("fecha_inicio")
+    tarea.fecha_fin = datos.get("fecha_fin")
+    tarea.completa = datos.get("completa", False)
+    tarea.sprint_id = sprint_id
+    tarea.programador_id = programador_id
+    tarea.save()
+
+    return JsonResponse({
+        "mensaje": "Tarea actualizada correctamente",
+        "id": tarea.id
+    })
+```
+
+Ejemplo: `PUT /api/tareas/45/actualizar/` con este JSON:
+
+```json
+{
+    "nombre": "Desarrollar el login",
+    "fecha_inicio": "2026-10-28",
+    "fecha_fin": null,
+    "completa": true,
+    "sprint_id": 1,
+    "programador_id": 2
+}
+```
+
+### Diferencia entre `create()` y `save()`
+
+Crear un objeto nuevo:
+
+```python
+nueva_tarea = Tarea.objects.create(nombre="Preparar el login")
+```
+
+Modificar un objeto que ya existe:
+
+```python
+tarea = Tarea.objects.get(id=45)
+tarea.nombre = "Nuevo nombre"
+tarea.save()
+```
+
+`create()` crea y guarda; `save()` persiste los cambios del objeto existente.
+
+## 8. Actualizar solo algunos campos: PATCH
+
+PATCH permite modificar únicamente los campos recibidos. En este ejemplo permitimos cambiar `nombre` y `completa`.
+
+```python
+@csrf_exempt
+def actualizar_tarea_parcial(request, id):
+    if request.method != "PATCH":
+        return JsonResponse(
+            {"error": "Operación no permitida"},
+            status=405
+        )
+
+    try:
+        datos = json.loads(request.body)
+    except (JSONDecodeError, UnicodeDecodeError):
+        return JsonResponse(
+            {"error": "JSON inválido"},
+            status=400
+        )
+
+    if not isinstance(datos, dict):
+        return JsonResponse(
+            {"error": "Se esperaba un objeto JSON"},
+            status=400
+        )
+
+    tarea = Tarea.objects.filter(id=id).first()
+    if tarea is None:
+        return JsonResponse(
+            {"error": "Tarea no encontrada"},
+            status=404
+        )
+
     if "nombre" in datos:
         nombre = datos["nombre"]
-
         if not isinstance(nombre, str) or not nombre.strip():
             return JsonResponse(
                 {"error": "El nombre debe ser un texto no vacío"},
                 status=400
             )
-
         tarea.nombre = nombre.strip()
 
     if "completa" in datos:
         completa = datos["completa"]
-
         if not isinstance(completa, bool):
             return JsonResponse(
                 {"error": "El campo completa debe ser true o false"},
                 status=400
             )
-
         tarea.completa = completa
 
     tarea.save()
 
     return JsonResponse({
-        "mensaje": "Tarea actualizada",
+        "mensaje": "Tarea actualizada correctamente",
         "id": tarea.id,
         "nombre": tarea.nombre,
-        "completa": tarea.completa,
+        "completa": tarea.completa
     })
 ```
 
-Ejemplo de cuerpo JSON para PATCH:
+Para marcar la tarea 45 como completada, envía `PATCH /api/tareas/45/parcial/` con:
 
 ```json
 {
-  "completa": true
+    "completa": true
 }
 ```
 
-Solo se modifica el campo `completa`; los demás mantienen su valor.
+Solo cambia `completa`; el nombre y los demás campos se mantienen.
 
-Para implementar PUT, podríamos crear otra vista que exigiera todos los campos requeridos y sustituyera el estado editable completo del recurso. No conviene llamar PUT a una operación parcial sin explicar esa decisión.
-
-## 8. Eliminar un registro con DELETE
-
-Una API puede utilizar DELETE para eliminar una tarea.
+## 9. Eliminar una tarea: DELETE
 
 ```python
-from django.views.decorators.http import require_http_methods
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from .models import Tarea
 
 
-@require_http_methods(["DELETE"])
+@csrf_exempt
 def eliminar_tarea(request, id):
-    tarea = get_object_or_404(Tarea, pk=id)
-    tarea.delete()
+    if request.method != "DELETE":
+        return JsonResponse(
+            {"error": "Operación no permitida"},
+            status=405
+        )
 
+    tarea = Tarea.objects.filter(id=id).first()
+    if tarea is None:
+        return JsonResponse(
+            {"error": "Tarea no encontrada"},
+            status=404
+        )
+
+    tarea.delete()
     return HttpResponse(status=204)
 ```
 
-El código `204 No Content` indica que la operación se ha completado y no hay contenido que devolver.
+`204 No Content` indica que la operación se ha completado y no se devuelve contenido. Atención: en el modelo, las relaciones de `Tarea` con `Sprint` y `Programador` usan `on_delete=models.CASCADE`; eliminar un sprint o programador puede eliminar también las tareas relacionadas.
 
-**Atención:** en el modelo proporcionado, las relaciones con `Programador` y `Sprint` utilizan `on_delete=models.CASCADE`. Eliminar uno de esos objetos puede eliminar también las tareas relacionadas. Antes de borrar registros relacionados, hay que tener en cuenta este comportamiento.
+## 10. Resumen de las URL
 
-## 9. Definir las URL de las vistas
+Con las rutas definidas anteriormente:
 
-En `urls.py` de la aplicación:
-
-```python
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path("api/tareas/", views.listar_tareas, name="listar_tareas"),
-    path("api/tareas/<int:id>/", views.detalle_tarea, name="detalle_tarea"),
-    path("api/tareas/crear/", views.crear_tarea_json, name="crear_tarea"),
-    path("api/tareas/<int:id>/actualizar/", views.actualizar_tarea, name="actualizar_tarea"),
-    path("api/tareas/<int:id>/eliminar/", views.eliminar_tarea, name="eliminar_tarea"),
-]
-```
-
-**Nota sobre el orden de las rutas:** la ruta `api/tareas/<int:id>/` no coincide con `api/tareas/crear/`, porque `crear` no es un entero. Las rutas específicas pueden colocarse antes de las rutas con parámetros para facilitar la lectura.
-
-Las rutas del ejemplo usan nombres ilustrativos. Si eliges la ruta REST habitual `api/tareas/<int:id>/` para el detalle, actualización y eliminación, puedes asociar la misma URL a una vista que distinga entre GET, PATCH y DELETE según `request.method`.
-
-## 10. Probar las peticiones
-
-Puedes probar las vistas con herramientas como Postman, Insomnia o `curl`.
-
-| Operación | Método | URL de ejemplo |
+| Operación | Método | URL |
 |---|---|---|
 | Listar tareas | GET | `/api/tareas/` |
-| Consultar tarea 1 | GET | `/api/tareas/1/` |
+| Consultar tarea 45 | GET | `/api/tarea/45/` |
 | Crear tarea | POST | `/api/tareas/crear/` |
-| Actualizar parcialmente tarea 1 | PATCH | `/api/tareas/1/actualizar/` |
-| Eliminar tarea 1 | DELETE | `/api/tareas/1/eliminar/` |
+| Actualizar tarea completa | PUT | `/api/tareas/45/actualizar/` |
+| Actualizar algunos campos | PATCH | `/api/tareas/45/parcial/` |
+| Eliminar tarea | DELETE | `/api/tareas/45/eliminar/` |
 
-Ejemplo de consulta GET:
+Ejemplo de consulta con `curl`:
 
 ```bash
 curl http://127.0.0.1:8000/api/tareas/
 ```
 
-Ejemplo de creación JSON:
+Ejemplo de creación:
 
 ```bash
 curl -X POST http://127.0.0.1:8000/api/tareas/crear/ \
@@ -413,7 +476,7 @@ curl -X POST http://127.0.0.1:8000/api/tareas/crear/ \
 Ejemplo de actualización parcial:
 
 ```bash
-curl -X PATCH http://127.0.0.1:8000/api/tareas/1/actualizar/ \
+curl -X PATCH http://127.0.0.1:8000/api/tareas/45/parcial/ \
   -H "Content-Type: application/json" \
   -d '{"completa":true}'
 ```
@@ -421,49 +484,63 @@ curl -X PATCH http://127.0.0.1:8000/api/tareas/1/actualizar/ \
 Ejemplo de eliminación:
 
 ```bash
-curl -X DELETE http://127.0.0.1:8000/api/tareas/1/eliminar/
+curl -X DELETE http://127.0.0.1:8000/api/tareas/45/eliminar/
 ```
-
-En estos ejemplos se presupone que el servidor está ejecutándose en el puerto 8000 y que las rutas coinciden con las definidas en el proyecto.
 
 ## 11. Códigos HTTP habituales
 
 | Código | Significado | Cuándo utilizarlo |
-|---|---|---|
-| `200 OK` | Petición correcta | Consulta o actualización con respuesta |
-| `201 Created` | Recurso creado | Creación correcta |
-| `204 No Content` | Correcto, sin contenido | Eliminación correcta |
-| `400 Bad Request` | Petición incorrecta | JSON inválido o datos no válidos |
-| `404 Not Found` | Recurso no encontrado | No existe la tarea solicitada |
-| `405 Method Not Allowed` | Método no permitido | Se usa un método no admitido por la vista |
+|---:|---|---|
+| `200` | OK | Consulta o actualización correcta con respuesta |
+| `201` | Created | Se ha creado una tarea |
+| `204` | No Content | Eliminación correcta sin cuerpo de respuesta |
+| `400` | Bad Request | JSON inválido o datos incorrectos |
+| `403` | Forbidden | El usuario no tiene permisos |
+| `404` | Not Found | La tarea, el sprint o el programador no existe |
+| `405` | Method Not Allowed | Se utiliza un método HTTP no permitido |
+| `500` | Internal Server Error | Error inesperado en el servidor |
 
-## 12. Buenas prácticas
+Por ejemplo:
 
-- Limitar los métodos permitidos mediante `require_POST`, `require_GET` o `require_http_methods`.
-- Validar todos los datos antes de guardarlos.
-- Gestionar errores de JSON mal formado.
-- Utilizar `get_object_or_404()` cuando el recurso solicitado puede no existir.
-- Proteger las operaciones de escritura y comprobar los permisos del usuario.
-- Mantener la protección CSRF en formularios web.
-- No asumir que recibir un ID significa que el usuario tiene permiso para modificar ese objeto.
-- Recordar que `request.POST` sirve para datos de formularios, no para decodificar automáticamente un cuerpo JSON.
-- Evitar borrar objetos relacionados sin comprobar las consecuencias de `on_delete`.
+```python
+return JsonResponse(
+    {"error": "Tarea no encontrada"},
+    status=404
+)
+```
 
-## 13. Actividades propuestas
+El código HTTP comunica el resultado de la petición y el JSON explica el motivo.
 
-Implementa y prueba estas operaciones usando los modelos de la práctica:
+## 12. ¿Qué significa `safe` en `JsonResponse`?
 
-1. Crear un programador mediante POST.
-2. Listar todos los proyectos mediante GET.
-3. Consultar un sprint por su ID.
-4. Crear una tarea indicando nombre y estado.
-5. Actualizar el nombre de una tarea mediante PATCH.
-6. Marcar una tarea como completa mediante PATCH.
-7. Eliminar una etiqueta mediante DELETE.
-8. Devolver un error 404 al consultar un objeto inexistente.
-9. Devolver un error 400 cuando el JSON esté mal formado.
-10. Probar qué ocurre si se intenta utilizar un método HTTP no permitido.
+Por defecto, `JsonResponse` espera un diccionario:
 
-### Objetivo final
+```python
+return JsonResponse({"nombre": "Preparar presentación"})
+```
 
-El alumnado debe saber crear vistas que respondan a diferentes métodos HTTP, trabajar con los modelos del ORM y devolver respuestas apropiadas. Esta clase utiliza vistas basadas en funciones; posteriormente se pueden estudiar las vistas basadas en clases y Django REST Framework para construir APIs más completas.
+Para devolver una lista de diccionarios usamos `safe=False`:
+
+```python
+return JsonResponse(list(Tarea.objects.values()), safe=False)
+```
+
+`safe=False` permite devolver una lista como respuesta principal. No es necesario cuando devolvemos un único diccionario.
+
+## 13. ¿Qué hace `@csrf_exempt`?
+
+`@csrf_exempt` desactiva la comprobación CSRF en esa vista. En estos ejemplos se utiliza para simplificar las pruebas con herramientas como Postman. No autentica al usuario ni comprueba sus permisos. No debe añadirse indiscriminadamente en una aplicación real; si se utiliza autenticación mediante sesiones y cookies, la protección CSRF sigue siendo importante.
+
+## 14. Buenas prácticas
+
+- Comprobar qué método HTTP admite cada vista.
+- Controlar los errores de `json.loads()`.
+- Comprobar que el JSON recibido es un diccionario cuando esperamos un objeto.
+- Validar los campos antes de guardar.
+- Comprobar que los identificadores de las relaciones existen.
+- Utilizar `create()` para crear objetos y `save()` para guardar modificaciones.
+- Devolver `404` cuando no existe el recurso solicitado.
+- No confiar en los datos recibidos del cliente.
+- Configurar autenticación y permisos en una API real.
+- Mantener la protección CSRF cuando se trabaja con sesiones y cookies.
+
