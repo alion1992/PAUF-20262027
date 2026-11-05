@@ -1,0 +1,1636 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Programación de Aplicaciones utilizando Frameworks">
+      
+      
+      
+      
+        <link rel="prev" href="../vistas/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Test - PAUF</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tests-automatizados-en-django" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="PAUF" class="md-header__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PAUF
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Test
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PAUF" class="md-nav__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PAUF
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-fundamentos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentos de programación Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-parte2-poo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orientación a objetos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios Clase
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ejercicios Clase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-fundamentos-parte1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios fundamentos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicio-la-liga/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios la liga
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-ficheros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios ficheros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../primeros_pasos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primeros pasos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relaciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consultas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vistas Django
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-que-es-un-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ¿Qué es un test?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-donde-escribimos-los-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. ¿Dónde escribimos los tests?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-nuestro-primer-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Nuestro primer test
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Nuestro primer test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-preparar-datos-con-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Preparar datos con setUp()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-metodos-assert-mas-utilizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Métodos assert más utilizados
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-probar-las-vistas-con-el-cliente-de-django" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Probar las vistas con el cliente de Django
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Probar las vistas con el cliente de Django">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-estamos-comprobando" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué estamos comprobando?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-comprobar-errores-en-las-vistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Comprobar errores en las vistas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Comprobar errores en las vistas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-comprobar-que-no-se-permite-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1. Comprobar que no se permite GET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-comprobar-que-el-json-esta-mal-formado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2. Comprobar que el JSON está mal formado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-comprobar-que-el-sprint-no-existe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3. Comprobar que el sprint no existe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-probar-las-etiquetas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Probar las etiquetas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Probar las etiquetas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-comprobar-que-se-crean-las-etiquetas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1. Comprobar que se crean las etiquetas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-comprobar-que-se-reutilizan-las-etiquetas-existentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2. Comprobar que se reutilizan las etiquetas existentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ejecutar-los-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Ejecutar los tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-que-ocurre-con-la-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. ¿Qué ocurre con la base de datos?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-actividad-propuesta-bateria-de-tests-para-la-api-de-tareas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Actividad propuesta: batería de tests para la API de tareas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Actividad propuesta: batería de tests para la API de tareas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#condiciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Condiciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-que-es-un-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ¿Qué es un test?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-donde-escribimos-los-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. ¿Dónde escribimos los tests?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-nuestro-primer-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Nuestro primer test
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Nuestro primer test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-preparar-datos-con-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Preparar datos con setUp()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-metodos-assert-mas-utilizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Métodos assert más utilizados
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-probar-las-vistas-con-el-cliente-de-django" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Probar las vistas con el cliente de Django
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Probar las vistas con el cliente de Django">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-estamos-comprobando" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué estamos comprobando?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-comprobar-errores-en-las-vistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Comprobar errores en las vistas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Comprobar errores en las vistas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-comprobar-que-no-se-permite-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1. Comprobar que no se permite GET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-comprobar-que-el-json-esta-mal-formado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2. Comprobar que el JSON está mal formado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-comprobar-que-el-sprint-no-existe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3. Comprobar que el sprint no existe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-probar-las-etiquetas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Probar las etiquetas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Probar las etiquetas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-comprobar-que-se-crean-las-etiquetas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1. Comprobar que se crean las etiquetas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-comprobar-que-se-reutilizan-las-etiquetas-existentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2. Comprobar que se reutilizan las etiquetas existentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ejecutar-los-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Ejecutar los tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-que-ocurre-con-la-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. ¿Qué ocurre con la base de datos?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-actividad-propuesta-bateria-de-tests-para-la-api-de-tareas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Actividad propuesta: batería de tests para la API de tareas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Actividad propuesta: batería de tests para la API de tareas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#condiciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Condiciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tests-automatizados-en-django">Tests automatizados en Django</h1>
+<h2 id="1-que-es-un-test">1. ¿Qué es un test?</h2>
+<p>Un test o prueba automatizada es un fragmento de código que comprueba
+que una parte de nuestra aplicación funciona como esperamos.</p>
+<p>Por ejemplo, podemos comprobar:</p>
+<ul>
+<li>Que se crea correctamente una tarea.</li>
+<li>Que una tarea tiene el nombre esperado.</li>
+<li>Que una petición <code>POST</code> devuelve el código HTTP adecuado.</li>
+<li>Que una petición <code>GET</code> no está permitida en una vista que solo
+    admite <code>POST</code>.</li>
+<li>Que se devuelve un error cuando el JSON está mal formado.</li>
+<li>Que las etiquetas se crean si no existen y se reutilizan si ya
+    existen.</li>
+</ul>
+<p>Django incorpora un sistema de pruebas basado en <code>unittest</code> de Python.</p>
+<h2 id="2-donde-escribimos-los-tests">2. ¿Dónde escribimos los tests?</h2>
+<p>Normalmente, creamos un archivo llamado <code>tests.py</code> dentro de nuestra
+aplicación Django:</p>
+<pre><code class="language-text">proyecto/
+├── manage.py
+└── tareas/
+    ├── models.py
+    ├── views.py
+    ├── urls.py
+    └── tests.py
+</code></pre>
+<p>También podemos organizar las pruebas en una carpeta <code>tests/</code> cuando el
+proyecto tenga muchos tests.</p>
+<h2 id="3-nuestro-primer-test">3. Nuestro primer test</h2>
+<p>En <code>tests.py</code>:</p>
+<pre><code class="language-python">from django.test import TestCase
+
+
+class OperacionesTest(TestCase):
+
+    def test_suma(self):
+        resultado = 2 + 3
+
+        self.assertEqual(resultado, 5)
+</code></pre>
+<h3 id="explicacion">Explicación</h3>
+<ul>
+<li><code>TestCase</code>: clase de Django que proporciona herramientas para
+    realizar pruebas.</li>
+<li><code>OperacionesTest</code>: clase que agrupa pruebas relacionadas.</li>
+<li><code>test_suma</code>: los métodos de prueba deben comenzar por <code>test_</code>.</li>
+<li><code>assertEqual(valor1, valor2)</code>: comprueba que ambos valores son
+    iguales.</li>
+</ul>
+<p>Si la condición se cumple, el test pasa. Si no se cumple, Django informa
+del fallo.</p>
+<h2 id="4-preparar-datos-con-setup">4. Preparar datos con setUp()</h2>
+<p>En muchos tests necesitamos objetos de la base de datos. Para no repetir
+su creación en cada prueba, podemos utilizar el método <code>setUp()</code>.</p>
+<p>Django ejecuta <code>setUp()</code> antes de cada método de prueba.</p>
+<p>Supongamos que nuestros modelos tienen una estructura similar a esta:</p>
+<pre><code class="language-python">class Programador(models.Model):
+    nombre = models.CharField(max_length=100)
+
+
+class Sprint(models.Model):
+    fecha_inicio = models.DateField()
+
+
+class Tarea(models.Model):
+    nombre = models.CharField(max_length=100)
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField(null=True, blank=True)
+    completa = models.BooleanField(default=False)
+
+    sprint = models.ForeignKey(Sprint, on_delete=models.CASCADE)
+    programador = models.ForeignKey(Programador, on_delete=models.CASCADE)
+</code></pre>
+<p>El test sería:</p>
+<pre><code class="language-python">from datetime import date
+from django.test import TestCase
+from .models import Tarea, Sprint, Programador
+
+
+class TareaTest(TestCase):
+
+    def setUp(self):
+        # Estos objetos estarán disponibles en cada test
+        self.programador = Programador.objects.create(
+            nombre=&quot;Francisco&quot;
+        )
+
+        self.sprint = Sprint.objects.create(
+            nombre=&quot;Sprint 1&quot;
+        )
+
+    def test_crear_tarea(self):
+        tarea = Tarea.objects.create(
+            nombre=&quot;Desarrollar el login&quot;,
+            fecha_inicio=date(2026, 10, 28),
+            completa=False,
+            sprint=self.sprint,
+            programador=self.programador
+        )
+
+        self.assertEqual(tarea.nombre, &quot;Desarrollar el login&quot;)
+        self.assertFalse(tarea.completa)
+        self.assertEqual(tarea.sprint, self.sprint)
+        self.assertEqual(tarea.programador, self.programador)
+</code></pre>
+<p><strong>Importante:</strong> <code>setUp()</code> se ejecuta antes de cada test, no una sola vez
+para toda la clase. Django utiliza una base de datos de pruebas aislada.</p>
+<h2 id="5-metodos-assert-mas-utilizados">5. Métodos assert más utilizados</h2>
+<p>Los métodos <code>assert</code> permiten comprobar si se cumple una condición.</p>
+<hr />
+<p>Método                              ¿Qué comprueba?</p>
+<hr />
+<p><code>assertEqual(a, b)</code>                 Que dos valores son iguales.</p>
+<p><code>assertNotEqual(a, b)</code>              Que dos valores son diferentes.</p>
+<p><code>assertTrue(x)</code>                     Que una condición es verdadera.</p>
+<p><code>assertFalse(x)</code>                    Que una condición es falsa.</p>
+<p><code>assertIsNone(x)</code>                   Que el valor es <code>None</code>.</p>
+<p><code>assertIsNotNone(x)</code>                Que el valor no es <code>None</code>.</p>
+<p><code>assertIn(a, b)</code>                    Que un elemento está dentro de una
+                                      colección.</p>
+<p><code>assertNotIn(a, b)</code>                 Que un elemento no está dentro de
+                                      una colección.</p>
+<p><code>assertRaises()</code>                    Que se produce una excepción
+                                      determinada.</p>
+<hr />
+<p>Ejemplo de <code>assertRaises()</code>:</p>
+<pre><code class="language-python">def test_division_por_cero(self):
+    with self.assertRaises(ZeroDivisionError):
+        resultado = 10 / 0
+</code></pre>
+<h2 id="6-probar-las-vistas-con-el-cliente-de-django">6. Probar las vistas con el cliente de Django</h2>
+<p>También podemos comprobar que nuestras vistas responden correctamente a
+las peticiones HTTP.</p>
+<p>Django proporciona un cliente de pruebas mediante <code>self.client</code>. No
+necesitamos arrancar el servidor para utilizarlo.</p>
+<p>Supongamos que nuestra URL para crear tareas es <code>/tareas/crear/</code>.</p>
+<pre><code class="language-python">def test_crear_tarea_api(self):
+
+    datos = {
+        &quot;nombre&quot;: &quot;Desarrollar el login&quot;,
+        &quot;fecha_inicio&quot;: &quot;2026-10-28&quot;,
+        &quot;fecha_fin&quot;: None,
+        &quot;completa&quot;: False,
+        &quot;sprint_id&quot;: self.sprint.id,
+        &quot;programador_id&quot;: self.programador.id,
+        &quot;etiquetas&quot;: [&quot;Backend&quot;, &quot;SQL&quot;]
+    }
+
+    respuesta = self.client.post(
+        &quot;/tareas/crear/&quot;,
+        data=datos,
+        content_type=&quot;application/json&quot;
+    )
+
+    self.assertEqual(respuesta.status_code, 200)
+    self.assertEqual(Tarea.objects.count(), 1)
+</code></pre>
+<h3 id="que-estamos-comprobando">¿Qué estamos comprobando?</h3>
+<ol>
+<li>Enviamos una petición <code>POST</code> a nuestra vista.</li>
+<li>Enviamos los datos en formato JSON.</li>
+<li>Comprobamos que la respuesta tiene código HTTP <code>200</code>.</li>
+<li>Comprobamos que se ha creado una tarea en la base de datos.</li>
+</ol>
+<p>La ruta utilizada debe coincidir con la definida en el archivo <code>urls.py</code>
+del proyecto.</p>
+<h2 id="7-comprobar-errores-en-las-vistas">7. Comprobar errores en las vistas</h2>
+<p>También debemos probar los casos en los que algo sale mal.</p>
+<h3 id="71-comprobar-que-no-se-permite-get">7.1. Comprobar que no se permite GET</h3>
+<p>Si nuestra vista solo admite peticiones <code>POST</code>:</p>
+<pre><code class="language-python">def test_no_permitir_get(self):
+    respuesta = self.client.get(&quot;/tareas/crear/&quot;)
+
+    self.assertEqual(respuesta.status_code, 405)
+</code></pre>
+<h3 id="72-comprobar-que-el-json-esta-mal-formado">7.2. Comprobar que el JSON está mal formado</h3>
+<pre><code class="language-python">def test_json_incorrecto(self):
+
+    respuesta = self.client.post(
+        &quot;/tareas/crear/&quot;,
+        data=&quot;{json incorrecto}&quot;,
+        content_type=&quot;application/json&quot;
+    )
+
+    self.assertEqual(respuesta.status_code, 400)
+</code></pre>
+<h3 id="73-comprobar-que-el-sprint-no-existe">7.3. Comprobar que el sprint no existe</h3>
+<pre><code class="language-python">def test_sprint_inexistente(self):
+
+    datos = {
+        &quot;nombre&quot;: &quot;Desarrollar el login&quot;,
+        &quot;fecha_inicio&quot;: &quot;2026-10-28&quot;,
+        &quot;sprint_id&quot;: 9999,
+        &quot;programador_id&quot;: self.programador.id,
+        &quot;etiquetas&quot;: []
+    }
+
+    respuesta = self.client.post(
+        &quot;/tareas/crear/&quot;,
+        data=datos,
+        content_type=&quot;application/json&quot;
+    )
+
+    self.assertEqual(respuesta.status_code, 400)
+    self.assertEqual(Tarea.objects.count(), 0)
+</code></pre>
+<p>Este ejemplo presupone que nuestra vista devuelve el código <code>400</code> cuando
+falla la validación del sprint.</p>
+<h2 id="8-probar-las-etiquetas">8. Probar las etiquetas</h2>
+<p>En nuestro proyecto, la vista permite recibir una lista de etiquetas. Si
+una etiqueta no existe, la crea; si ya existe, la reutiliza.</p>
+<p>Podemos comprobar este comportamiento con tests.</p>
+<h3 id="81-comprobar-que-se-crean-las-etiquetas">8.1. Comprobar que se crean las etiquetas</h3>
+<pre><code class="language-python">def test_crear_etiquetas_nuevas(self):
+
+    datos = {
+        &quot;nombre&quot;: &quot;Desarrollar el login&quot;,
+        &quot;fecha_inicio&quot;: &quot;2026-10-28&quot;,
+        &quot;sprint_id&quot;: self.sprint.id,
+        &quot;programador_id&quot;: self.programador.id,
+        &quot;etiquetas&quot;: [&quot;Backend&quot;, &quot;SQL&quot;]
+    }
+
+    respuesta = self.client.post(
+        &quot;/tareas/crear/&quot;,
+        data=datos,
+        content_type=&quot;application/json&quot;
+    )
+
+    self.assertEqual(respuesta.status_code, 200)
+    self.assertEqual(Etiqueta.objects.count(), 2)
+</code></pre>
+<h3 id="82-comprobar-que-se-reutilizan-las-etiquetas-existentes">8.2. Comprobar que se reutilizan las etiquetas existentes</h3>
+<pre><code class="language-python">def test_reutilizar_etiqueta(self):
+
+    etiqueta = Etiqueta.objects.create(nombre=&quot;Backend&quot;)
+
+    datos = {
+        &quot;nombre&quot;: &quot;Desarrollar el login&quot;,
+        &quot;fecha_inicio&quot;: &quot;2026-10-28&quot;,
+        &quot;sprint_id&quot;: self.sprint.id,
+        &quot;programador_id&quot;: self.programador.id,
+        &quot;etiquetas&quot;: [&quot;Backend&quot;]
+    }
+
+    respuesta = self.client.post(
+        &quot;/tareas/crear/&quot;,
+        data=datos,
+        content_type=&quot;application/json&quot;
+    )
+
+    self.assertEqual(respuesta.status_code, 200)
+    self.assertEqual(Etiqueta.objects.count(), 1)
+
+    tarea = Tarea.objects.get(nombre=&quot;Desarrollar el login&quot;)
+
+    self.assertIn(etiqueta, tarea.etiquetas.all())
+</code></pre>
+<p>Estos ejemplos presuponen que existe el modelo <code>Etiqueta</code>, que <code>Tarea</code>
+tiene una relación ManyToMany con él y que la vista asocia las etiquetas
+recibidas.</p>
+<h2 id="9-ejecutar-los-tests">9. Ejecutar los tests</h2>
+<p>Desde la terminal, en la carpeta donde se encuentra <code>manage.py</code>:</p>
+<p>Ejecutar todos los tests del proyecto:</p>
+<pre><code class="language-bash">python manage.py test
+</code></pre>
+<p>Ejecutar los tests de una aplicación concreta:</p>
+<pre><code class="language-bash">python manage.py test tareas
+</code></pre>
+<p>Ejecutar una clase concreta:</p>
+<pre><code class="language-bash">python manage.py test tareas.tests.TareaTest
+</code></pre>
+<p>Ejecutar un método concreto:</p>
+<pre><code class="language-bash">python manage.py test tareas.tests.TareaTest.test_crear_tarea
+</code></pre>
+<h2 id="10-que-ocurre-con-la-base-de-datos">10. ¿Qué ocurre con la base de datos?</h2>
+<p>Django crea automáticamente una base de datos de pruebas independiente.</p>
+<p>El proceso habitual es:</p>
+<ol>
+<li>Crea la base de datos de pruebas.</li>
+<li>Prepara las tablas necesarias.</li>
+<li>Ejecuta los tests.</li>
+<li>Comprueba los resultados.</li>
+<li>Destruye la base de datos de pruebas al finalizar.</li>
+</ol>
+<p>Por tanto, los tests no modifican los datos de nuestra base de datos
+habitual.</p>
+<h2 id="11-actividad-propuesta-bateria-de-tests-para-la-api-de-tareas">11. Actividad propuesta: batería de tests para la API de tareas</h2>
+<p>Crea una clase <code>TareaTest</code> que compruebe el funcionamiento de la API de
+gestión de tareas.</p>
+<p>Debes implementar los siguientes tests:</p>
+<ol>
+<li><strong>Crear una tarea correctamente:</strong> comprobar que se devuelve el
+    código HTTP esperado y que la tarea aparece en la base de datos.</li>
+<li><strong>Método HTTP incorrecto:</strong> comprobar que una petición GET devuelve
+    el código <code>405</code>.</li>
+<li><strong>JSON mal formado:</strong> comprobar que se devuelve el código <code>400</code>.</li>
+<li><strong>Sprint inexistente:</strong> comprobar que se devuelve un error y que no
+    se crea la tarea.</li>
+<li><strong>Programador inexistente:</strong> comprobar que se devuelve un error y
+    que no se crea la tarea.</li>
+<li><strong>Crear etiquetas nuevas:</strong> enviar dos etiquetas que no existan y
+    comprobar que se crean.</li>
+<li><strong>Reutilizar etiquetas:</strong> enviar una etiqueta que ya exista y
+    comprobar que no se duplica.</li>
+<li><strong>Varias etiquetas:</strong> comprobar que una tarea puede tener asociadas
+    varias etiquetas.</li>
+</ol>
+<h3 id="condiciones">Condiciones</h3>
+<ul>
+<li>Utiliza <code>TestCase</code>.</li>
+<li>Utiliza <code>setUp()</code> para preparar los datos.</li>
+<li>Utiliza métodos <code>assert</code> para comprobar los resultados.</li>
+<li>Cada prueba debe estar en un método independiente que comience por
+    <code>test_</code>.</li>
+<li>Ejecuta las pruebas con <code>python manage.py test</code>.</li>
+</ul>
+<p><strong>Objetivo:</strong> aprender a comprobar automáticamente tanto los casos
+correctos como los errores que puede producir nuestra API.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
