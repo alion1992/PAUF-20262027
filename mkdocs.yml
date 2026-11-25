@@ -21,5 +21,6 @@ nav:
     - Consultas: unidad2/consultas.md
     - Vistas Django: unidad2/vistas.md
     - Test: unidad2/test.md
+    - Despliegue: unidad2/despliegue.md
      
      
