@@ -1,0 +1,1250 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Programación de Aplicaciones utilizando Frameworks">
+      
+      
+      
+      
+        <link rel="prev" href="../../unidad2/despliegue/">
+      
+      
+        <link rel="next" href="../arquitectura/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Introducción y creación del proyecto - PAUF</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ud3-desarrollo-y-despliegue-de-aplicaciones-back-end-con-spring-boot" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="PAUF" class="md-header__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PAUF
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introducción y creación del proyecto
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PAUF" class="md-nav__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PAUF
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-fundamentos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentos de programación Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-parte2-poo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orientación a objetos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios Clase
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ejercicios Clase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-fundamentos-parte1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios fundamentos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicio-la-liga/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios la liga
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-ficheros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios ficheros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/primeros_pasos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primeros pasos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/relaciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/consultas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vistas Django
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/despliegue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 3 - Desarrollo de aplicaciones Back-End con Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 3 - Desarrollo de aplicaciones Back-End con Spring Boot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción y creación del proyecto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitectura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura de una aplicación Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ud3-desarrollo-y-despliegue-de-aplicaciones-back-end-con-spring-boot">UD3. Desarrollo y despliegue de aplicaciones Back-End con Spring Boot</h1>
+<h1 id="1-introduccion-a-spring-boot-y-creacion-de-proyectos">1. Introducción a Spring Boot y creación de proyectos</h1>
+<h2 id="11-que-es-spring-framework">1.1. ¿Qué es Spring Framework?</h2>
+<p><strong>Spring Framework</strong> es un framework de desarrollo para Java que
+proporciona herramientas y funcionalidades para construir aplicaciones
+empresariales, aplicaciones web y servicios.</p>
+<p>Su principal objetivo es facilitar el desarrollo de aplicaciones
+mediante una arquitectura organizada, modular y fácilmente mantenible.</p>
+<p>Entre sus principales características encontramos:</p>
+<ul>
+<li><strong>Inyección de dependencias (DI):</strong> permite que los objetos reciban
+    automáticamente las dependencias que necesitan, evitando tener que
+    crearlas manualmente.</li>
+<li><strong>Inversión de control (IoC):</strong> el framework se encarga de gestionar
+    la creación y el ciclo de vida de determinados objetos.</li>
+<li><strong>Programación modular:</strong> permite organizar una aplicación en
+    diferentes componentes.</li>
+<li><strong>Integración con otras tecnologías:</strong> facilita el trabajo con bases
+    de datos, seguridad, servicios web y otras herramientas.</li>
+</ul>
+<p>Spring Framework es muy potente, pero tradicionalmente requería bastante
+configuración para poner en marcha una aplicación.</p>
+<p>Para simplificar este proceso apareció <strong>Spring Boot</strong>.</p>
+<h2 id="12-que-es-spring-boot">1.2. ¿Qué es Spring Boot?</h2>
+<p>Spring Boot es una herramienta del ecosistema Spring que permite crear
+aplicaciones Java de forma rápida, reduciendo considerablemente la
+configuración inicial.</p>
+<p>Su objetivo es que podamos centrarnos en desarrollar la lógica de
+nuestra aplicación sin tener que preocuparnos constantemente por
+configurar todos los componentes necesarios.</p>
+<p>Spring Boot se apoya principalmente en tres características:</p>
+<h3 id="1-auto-configuracion">1. Auto-configuración</h3>
+<p>Spring Boot analiza las dependencias que hemos añadido al proyecto y
+configura automáticamente los componentes que necesita.</p>
+<p>Por ejemplo, si añadimos Spring Web, prepara los componentes necesarios
+para desarrollar una aplicación web y pone a nuestra disposición un
+servidor Tomcat embebido.</p>
+<h3 id="2-starters">2. Starters</h3>
+<p>Son conjuntos de dependencias que permiten incorporar funcionalidades a
+nuestro proyecto de manera sencilla.</p>
+<p>Por ejemplo:</p>
+<ul>
+<li><code>spring-boot-starter-web</code>: desarrollo de aplicaciones web y API
+    REST.</li>
+<li><code>spring-boot-starter-data-jpa</code>: acceso a bases de datos mediante
+    JPA.</li>
+<li><code>spring-boot-starter-security</code>: incorporación de mecanismos de
+    seguridad.</li>
+<li><code>spring-boot-starter-test</code>: herramientas para realizar pruebas.</li>
+</ul>
+<p>En lugar de buscar e incorporar manualmente todas las librerías
+necesarias, podemos utilizar estos paquetes.</p>
+<h3 id="3-servidores-embebidos">3. Servidores embebidos</h3>
+<p>Spring Boot incorpora servidores web como Tomcat, que permiten ejecutar
+nuestra aplicación directamente sin necesidad de instalar y configurar
+un servidor externo.</p>
+<p>Esto facilita enormemente el desarrollo y el despliegue de aplicaciones.</p>
+<h3 id="spring-framework-frente-a-spring-boot">Spring Framework frente a Spring Boot</h3>
+<p><img alt="alt text" src="../image-3.png" /></p>
+<p><strong>Importante:</strong> Spring Boot no sustituye a Spring Framework. Se
+construye sobre él y facilita su utilización.</p>
+<h2 id="13-por-que-utilizamos-spring-boot-para-desarrollar-back-end">1.3. ¿Por qué utilizamos Spring Boot para desarrollar Back-End?</h2>
+<p>En esta unidad utilizaremos Spring Boot para desarrollar aplicaciones
+Back-End que proporcionen servicios a otras aplicaciones.</p>
+<p>Por ejemplo, podemos desarrollar una aplicación de gestión de tareas que
+permita:</p>
+<ul>
+<li>Registrar usuarios.</li>
+<li>Crear tareas.</li>
+<li>Consultar tareas.</li>
+<li>Modificar tareas.</li>
+<li>Eliminar tareas.</li>
+<li>Almacenar información en una base de datos.</li>
+</ul>
+<p>Nuestra aplicación expondrá una API REST que podrá ser consumida desde
+diferentes clientes, como una aplicación Angular, Vue.js o incluso una
+aplicación móvil.</p>
+<p>La arquitectura que construiremos será:</p>
+<p><img alt="alt text" src="../image-2.png" /></p>
+<p>A lo largo de la unidad iremos desarrollando cada una de estas partes.</p>
+<h2 id="14-requisitos-previos">1.4. Requisitos previos</h2>
+<p>Antes de comenzar a desarrollar con Spring Boot necesitamos disponer de
+algunas herramientas.</p>
+<h3 id="java-jdk">Java JDK</h3>
+<p>Necesitamos tener instalado el JDK de Java, ya que Spring Boot utiliza
+Java para ejecutar nuestras aplicaciones.</p>
+<p>Comprobaremos la versión instalada desde una terminal:</p>
+<pre><code class="language-bash">java -version
+</code></pre>
+<p>Para los proyectos de esta unidad utilizaremos Java 21.</p>
+<h3 id="entorno-de-desarrollo-ide">Entorno de desarrollo (IDE)</h3>
+<p>Podemos utilizar diferentes entornos de desarrollo:</p>
+<ul>
+<li>IntelliJ IDEA.</li>
+<li>Visual Studio Code.</li>
+<li>Eclipse.</li>
+</ul>
+<p>En los ejemplos utilizaremos nuestro IDE habitual de desarrollo Java.</p>
+<h3 id="maven">Maven</h3>
+<p>Maven es una herramienta de gestión y construcción de proyectos Java.</p>
+<p>Nos permite:</p>
+<ul>
+<li>Gestionar las dependencias del proyecto.</li>
+<li>Descargar las librerías necesarias.</li>
+<li>Compilar el código.</li>
+<li>Ejecutar pruebas.</li>
+<li>Generar el archivo JAR de nuestra aplicación.</li>
+</ul>
+<p>No es necesario instalar Maven globalmente si utilizamos el Maven
+Wrapper que genera Spring Initializr.</p>
+<h2 id="15-creacion-de-un-proyecto-con-spring-initializr">1.5. Creación de un proyecto con Spring Initializr</h2>
+<p>Para crear un proyecto Spring Boot utilizaremos una herramienta oficial
+denominada <strong>Spring Initializr</strong>.</p>
+<p>Esta herramienta permite generar automáticamente la estructura inicial
+de un proyecto, configurar sus características e incorporar las
+dependencias que necesitemos.</p>
+<p>Accederemos a:</p>
+<p><a href="https://start.spring.io/">https://start.spring.io/</a></p>
+<h3 id="configuracion-del-proyecto">Configuración del proyecto</h3>
+<p>Vamos a crear nuestro primer proyecto, que utilizaremos como base para
+desarrollar un gestor de tareas durante esta unidad.</p>
+<p>Configuraremos los siguientes parámetros:</p>
+<p>Parámetro      Valor</p>
+<hr />
+<p>Project        Maven
+  Language       Java
+  Spring Boot    Versión estable compatible seleccionada en clase
+  Group          com.daw
+  Artifact       gestortareas
+  Name           gestortareas
+  Description    Aplicación de gestión de tareas
+  Package name   com.daw.gestortareas
+  Packaging      Jar
+  Java           21</p>
+<p><strong>¿Qué significa cada parámetro?</strong></p>
+<ul>
+<li><strong>Project:</strong> indica la herramienta que utilizaremos para gestionar y
+    construir el proyecto. En nuestro caso, Maven.</li>
+<li><strong>Language:</strong> lenguaje de programación utilizado. Seleccionaremos
+    Java.</li>
+<li><strong>Group:</strong> identifica el grupo u organización al que pertenece el
+    proyecto. Normalmente se utiliza una estructura similar a un dominio
+    invertido.</li>
+<li><strong>Artifact:</strong> nombre del proyecto y del artefacto que generaremos.</li>
+<li><strong>Name:</strong> nombre identificativo del proyecto.</li>
+<li><strong>Package name:</strong> paquete principal donde se organizarán nuestras
+    clases Java.</li>
+<li><strong>Packaging:</strong> formato en el que se empaquetará la aplicación.
+    Utilizaremos JAR.</li>
+<li><strong>Java:</strong> versión del JDK que utilizará el proyecto.</li>
+</ul>
+<h3 id="seleccion-de-dependencias">Selección de dependencias</h3>
+<p>Ahora debemos seleccionar las dependencias que queremos incorporar
+inicialmente.</p>
+<p>Para nuestro primer proyecto añadiremos:</p>
+<p><strong>Spring Web</strong></p>
+<p>Esta dependencia nos permitirá desarrollar aplicaciones web y API REST.</p>
+<p>Incluye los componentes necesarios para recibir peticiones HTTP,
+procesarlas y devolver respuestas.</p>
+<p>Más adelante incorporaremos otras dependencias como Spring Data JPA,
+PostgreSQL y Spring Security.</p>
+<p>Una vez configurado todo, pulsaremos el botón <strong>Generate</strong>.</p>
+<p>Se descargará un archivo ZIP con la estructura inicial del proyecto.</p>
+<h2 id="16-importacion-del-proyecto-en-el-ide">1.6. Importación del proyecto en el IDE</h2>
+<p>Una vez descargado el proyecto:</p>
+<ol>
+<li>Descomprimimos el archivo ZIP.</li>
+<li>Abrimos nuestro entorno de desarrollo.</li>
+<li>Seleccionamos la opción de abrir un proyecto existente.</li>
+<li>Buscamos la carpeta que acabamos de descomprimir.</li>
+<li>Abrimos el proyecto utilizando el archivo <code>pom.xml</code> como referencia.</li>
+</ol>
+<p>El IDE detectará que se trata de un proyecto Maven y comenzará a
+descargar las dependencias necesarias.</p>
+<p>Es posible que la primera importación tarde unos minutos.</p>
+<h2 id="17-estructura-inicial-del-proyecto">1.7. Estructura inicial del proyecto</h2>
+<p>Spring Initializr genera una estructura de carpetas similar a la
+siguiente:</p>
+<p><img alt="alt text" src="../image-1.png" /></p>
+<p>Vamos a identificar los elementos más importantes:</p>
+<h3 id="pomxml">pom.xml</h3>
+<p>Es el archivo de configuración de Maven.</p>
+<p>En él se definen las dependencias del proyecto, las versiones utilizadas
+y los plugins necesarios para compilar y ejecutar la aplicación.</p>
+<h3 id="mvnw-y-mvnwcmd">mvnw y mvnw.cmd</h3>
+<p>Son los ejecutables de Maven Wrapper.</p>
+<p>Permiten ejecutar comandos Maven sin necesidad de tener Maven instalado
+globalmente en el ordenador.</p>
+<ul>
+<li><code>mvnw</code>: utilizado en Linux y macOS.</li>
+<li><code>mvnw.cmd</code>: utilizado en Windows.</li>
+</ul>
+<h3 id="srcmainjava">src/main/java</h3>
+<p>Contiene el código fuente Java de nuestra aplicación.</p>
+<p>Aquí iremos creando las diferentes clases y paquetes que utilizaremos
+para desarrollar el Back-End.</p>
+<h3 id="srcmainresources">src/main/resources</h3>
+<p>Contiene los recursos y archivos de configuración de nuestra aplicación.</p>
+<p>Entre ellos encontraremos <code>application.properties</code>, donde configuraremos
+parámetros como el puerto del servidor o la conexión con la base de
+datos.</p>
+<h3 id="srctestjava">src/test/java</h3>
+<p>Contiene las clases destinadas a realizar pruebas automatizadas de
+nuestra aplicación.</p>
+<h2 id="18-clase-principal-de-spring-boot">1.8. Clase principal de Spring Boot</h2>
+<p>Dentro del paquete principal encontraremos una clase similar a esta:</p>
+<pre><code class="language-java">package com.daw.gestortareas;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GestortareasApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(GestortareasApplication.class, args);
+    }
+
+}
+</code></pre>
+<p>Esta es la clase principal de nuestra aplicación.</p>
+<p>Vamos a analizar sus elementos:</p>
+<h3 id="springbootapplication">@SpringBootApplication</h3>
+<p>Es una anotación fundamental de Spring Boot.</p>
+<p>Agrupa tres funcionalidades:</p>
+<ul>
+<li><code>@SpringBootConfiguration</code>: identifica la clase como una fuente de
+    configuración.</li>
+<li><code>@EnableAutoConfiguration</code>: activa la configuración automática de
+    Spring Boot.</li>
+<li><code>@ComponentScan</code>: permite localizar componentes de Spring dentro de
+    los paquetes correspondientes.</li>
+</ul>
+<p>Gracias a esta anotación, Spring Boot puede detectar y configurar
+automáticamente los componentes de nuestra aplicación.</p>
+<h3 id="metodo-main">Método main()</h3>
+<p>Es el punto de entrada de cualquier aplicación Java.</p>
+<pre><code class="language-java">public static void main(String[] args) {
+    SpringApplication.run(GestortareasApplication.class, args);
+}
+</code></pre>
+<p>La instrucción <code>SpringApplication.run()</code> inicia el contexto de Spring,
+carga la configuración y pone en marcha los componentes necesarios para
+ejecutar la aplicación.</p>
+<p>En nuestro caso, también iniciará el servidor web embebido.</p>
+<h2 id="19-archivo-applicationproperties">1.9. Archivo application.properties</h2>
+<p>Dentro de <code>src/main/resources</code> encontramos el archivo:</p>
+<pre><code class="language-text">application.properties
+</code></pre>
+<p>Este archivo permite configurar el comportamiento de nuestra aplicación
+sin tener que modificar el código Java.</p>
+<p>Por ejemplo, podemos establecer el nombre de la aplicación y el puerto
+en el que queremos que se ejecute.</p>
+<pre><code class="language-properties"># Nombre de la aplicación
+spring.application.name=gestortareas
+
+# Puerto del servidor
+server.port=8080
+
+# Mostrar el banner de Spring Boot
+spring.main.banner-mode=console
+
+# Nivel de registro de logs
+logging.level.root=INFO
+</code></pre>
+<p>Vamos a explicar las propiedades:</p>
+<hr />
+<p>Propiedad                           Descripción</p>
+<hr />
+<p><code>spring.application.name</code>           Nombre identificativo de la
+                                      aplicación.</p>
+<p><code>server.port</code>                       Puerto donde escuchará el servidor
+                                      web.</p>
+<p><code>spring.main.banner-mode</code>           Controla la visualización del
+                                      banner de inicio.</p>
+<p><code>logging.level.root</code>                Establece el nivel general de los
+                                      registros de la aplicación.</p>
+<hr />
+<p>Por defecto, Spring Boot utiliza el puerto 8080.</p>
+<p>Si queremos que nuestra aplicación utilice otro puerto, podemos
+modificarlo:</p>
+<pre><code class="language-properties">server.port=9090
+</code></pre>
+<p>En ese caso, nuestra aplicación estará disponible en el puerto 9090.</p>
+<p>Más adelante utilizaremos este archivo para configurar la conexión con
+PostgreSQL y otros componentes.</p>
+<h2 id="110-ejecucion-de-nuestra-primera-aplicacion">1.10. Ejecución de nuestra primera aplicación</h2>
+<p>Una vez importado el proyecto, podemos ejecutarlo de diferentes maneras.</p>
+<h3 id="desde-el-ide">Desde el IDE</h3>
+<p>Buscamos la clase <code>GestortareasApplication</code> y ejecutamos su método
+<code>main()</code>.</p>
+<h3 id="desde-la-terminal">Desde la terminal</h3>
+<p>También podemos situarnos en la carpeta raíz del proyecto y utilizar
+Maven Wrapper.</p>
+<p>En Linux y macOS:</p>
+<pre><code class="language-bash">./mvnw spring-boot:run
+</code></pre>
+<p>En Windows:</p>
+<pre><code class="language-bash">mvnw.cmd spring-boot:run
+</code></pre>
+<p>Spring Boot comenzará a inicializar la aplicación y mostrará información
+en la consola.</p>
+<p>Entre los mensajes podremos encontrar uno similar a:</p>
+<pre><code class="language-text">Tomcat started on port 8080 (http)
+Started GestortareasApplication
+</code></pre>
+<p>Esto indica que nuestra aplicación se ha iniciado correctamente y que el
+servidor Tomcat está escuchando en el puerto 8080.</p>
+<p>Podemos acceder desde el navegador a:</p>
+<p><a href="http://localhost:8080">http://localhost:8080</a></p>
+<p>Como todavía no hemos creado ningún controlador ni definido ninguna
+ruta, Spring Boot no encontrará un recurso que mostrar y podremos
+obtener un error 404.</p>
+<p><strong>Esto no significa que la aplicación esté mal ejecutada.</strong> El servidor
+está funcionando, pero todavía no hemos programado ningún endpoint.</p>
+<p>En el siguiente apartado aprenderemos a crear controladores para recibir
+peticiones HTTP y devolver respuestas.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

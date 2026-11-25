@@ -1,0 +1,1764 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Programación de Aplicaciones utilizando Frameworks">
+      
+      
+      
+      
+        <link rel="prev" href="../introduccion/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Arquitectura de una aplicación Spring Boot - PAUF</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ud3-desarrollo-y-despliegue-de-aplicaciones-back-end-con-spring-boot" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="PAUF" class="md-header__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PAUF
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Arquitectura de una aplicación Spring Boot
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PAUF" class="md-nav__button md-logo" aria-label="PAUF" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PAUF
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 1 - Fundamentos de Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-fundamentos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fundamentos de programación Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/unidad1-parte2-poo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orientación a objetos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios Clase
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ejercicios Clase
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-fundamentos-parte1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios fundamentos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicio-la-liga/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios la liga
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad1/ejerciciosClase/ejercicios-ficheros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios ficheros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 2 - Desarrollo de aplicaciones Back-End con Django
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/primeros_pasos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primeros pasos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/relaciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/consultas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vistas Django
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../unidad2/despliegue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidad 3 - Desarrollo de aplicaciones Back-End con Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidad 3 - Desarrollo de aplicaciones Back-End con Spring Boot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción y creación del proyecto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura de una aplicación Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ud3-desarrollo-y-despliegue-de-aplicaciones-back-end-con-spring-boot">UD3. Desarrollo y despliegue de aplicaciones Back-End con Spring Boot</h1>
+<h1 id="2-arquitectura-de-una-aplicacion-spring-boot">2. Arquitectura de una aplicación Spring Boot</h1>
+<p>En este apartado vamos a comenzar a desarrollar nuestra API REST con Spring Boot. Aprenderemos a organizar el código en diferentes paquetes y clases, de manera que cada elemento tenga una responsabilidad concreta.</p>
+<p>Utilizaremos como ejemplo una aplicación de gestión de tareas llamada <code>gestortareas</code>.</p>
+<p>En esta ocasión trabajaremos desde el principio con <strong>Spring Data JPA y PostgreSQL</strong>. De esta forma, las tareas se almacenarán en una base de datos y no se perderán al reiniciar la aplicación.</p>
+<h2 id="21-arquitectura-por-capas">2.1. Arquitectura por capas</h2>
+<p>Cuando desarrollamos una aplicación, es importante separar las responsabilidades. No debemos concentrar toda la lógica en una única clase.</p>
+<p>En nuestra aplicación utilizaremos los siguientes elementos:</p>
+<table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Responsabilidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Controller</td>
+<td>Recibe las peticiones HTTP y devuelve las respuestas.</td>
+</tr>
+<tr>
+<td>Service</td>
+<td>Contiene la lógica de negocio.</td>
+</tr>
+<tr>
+<td>Repository</td>
+<td>Se encarga de acceder a los datos almacenados.</td>
+</tr>
+<tr>
+<td>Model</td>
+<td>Representa las entidades principales de nuestra aplicación.</td>
+</tr>
+<tr>
+<td>DTO</td>
+<td>Define los datos que recibimos y enviamos a través de la API.</td>
+</tr>
+<tr>
+<td>Mapper</td>
+<td>Convierte objetos Model en DTO y viceversa.</td>
+</tr>
+</tbody>
+</table>
+<p>El recorrido habitual de una petición será:</p>
+<ol>
+<li>El cliente realiza una petición HTTP.</li>
+<li>El Controller recibe la petición.</li>
+<li>El Controller utiliza el Service correspondiente.</li>
+<li>El Service ejecuta la lógica de negocio y utiliza el Repository cuando necesita consultar o modificar datos.</li>
+<li>El Repository accede a la base de datos mediante Spring Data JPA.</li>
+<li>El resultado vuelve al Controller, que utiliza el Mapper para preparar el DTO de respuesta.</li>
+<li>El Controller devuelve una respuesta HTTP al cliente.</li>
+</ol>
+<h2 id="22-organizacion-de-paquetes">2.2. Organización de paquetes</h2>
+<p>Dentro del paquete principal <code>com.daw.vdg</code>, crearemos la siguiente estructura:</p>
+<pre><code class="language-text">com.daw.vdg
+│
+├── VdgApplication.java
+│
+├── controller
+│   └── TareaController.java
+│
+├── service
+│   └── TareaService.java
+│
+├── repository
+│   └── TareaRepository.java
+│
+├── model
+│   └── Tarea.java
+│
+├── dto
+│   ├── TareaRequestDTO.java
+│   └── TareaResponseDTO.java
+│
+└── mapper
+    └── TareaMapper.java
+</code></pre>
+<p>Todos estos paquetes deben estar dentro de <code>com.daw.vdg</code>, donde se encuentra la clase principal anotada con <code>@SpringBootApplication</code>. Así, el escaneo de componentes de Spring podrá localizar nuestros controladores, servicios y mappers.</p>
+<p>En IntelliJ podemos crear cada paquete haciendo clic derecho sobre <code>com.daw.vdg</code> y seleccionando <code>New → Package</code>.</p>
+<h2 id="23-configuracion-de-applicationproperties">2.3. Configuración de application.properties</h2>
+<p>Antes de trabajar con entidades y repositorios, necesitamos configurar la conexión con PostgreSQL.</p>
+<p>Dentro de <code>src/main/resources</code> encontraremos el archivo:</p>
+<pre><code class="language-text">application.properties
+</code></pre>
+<p>Este archivo permite configurar diferentes aspectos de nuestra aplicación, como su nombre, el puerto del servidor, la conexión con la base de datos y el comportamiento de Hibernate.</p>
+<p>Vamos a utilizar una configuración similar a la siguiente:</p>
+<pre><code class="language-properties"># Nombre de la aplicación
+spring.application.name=puertollano
+
+# Puerto en el que se ejecutará la aplicación
+server.port=8082
+
+# Mostrar el banner de Spring Boot
+spring.main.banner-mode=console
+
+# Nivel de registro de logs
+logging.level.root=INFO
+
+# Configuración de la conexión con PostgreSQL
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.username=franciscoaliahernandez
+spring.datasource.password=
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# Configuración de JPA e Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.default_schema=public
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+</code></pre>
+<h3 id="explicacion-de-las-propiedades">Explicación de las propiedades</h3>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spring.application.name</code></td>
+<td>Nombre identificativo de la aplicación.</td>
+</tr>
+<tr>
+<td><code>server.port</code></td>
+<td>Puerto en el que escuchará el servidor web.</td>
+</tr>
+<tr>
+<td><code>spring.main.banner-mode</code></td>
+<td>Controla la visualización del banner de Spring Boot.</td>
+</tr>
+<tr>
+<td><code>logging.level.root</code></td>
+<td>Establece el nivel general de los registros de la aplicación.</td>
+</tr>
+<tr>
+<td><code>spring.datasource.url</code></td>
+<td>URL de conexión con la base de datos.</td>
+</tr>
+<tr>
+<td><code>spring.datasource.username</code></td>
+<td>Usuario de PostgreSQL.</td>
+</tr>
+<tr>
+<td><code>spring.datasource.password</code></td>
+<td>Contraseña del usuario de PostgreSQL.</td>
+</tr>
+<tr>
+<td><code>spring.datasource.driver-class-name</code></td>
+<td>Driver JDBC utilizado para conectarse a PostgreSQL.</td>
+</tr>
+<tr>
+<td><code>spring.jpa.hibernate.ddl-auto</code></td>
+<td>Define cómo Hibernate gestiona la estructura de las tablas.</td>
+</tr>
+<tr>
+<td><code>spring.jpa.show-sql</code></td>
+<td>Permite mostrar en consola las consultas SQL generadas.</td>
+</tr>
+<tr>
+<td><code>spring.jpa.properties.hibernate.default_schema</code></td>
+<td>Esquema de PostgreSQL que se utilizará por defecto.</td>
+</tr>
+<tr>
+<td><code>spring.jpa.database-platform</code></td>
+<td>Dialecto SQL utilizado por Hibernate.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Importante sobre la conexión:</strong></p>
+<ul>
+<li>En <code>localhost:5432</code> indicamos que PostgreSQL está instalado en nuestro propio ordenador y escucha en el puerto 5432.</li>
+<li>El último elemento de la URL, <code>postgres</code>, es el nombre de la base de datos a la que queremos conectarnos. En este ejemplo utilizamos la base de datos <code>postgres</code>, que suele existir por defecto.</li>
+<li>El usuario y la contraseña deben corresponder a un usuario real de PostgreSQL.</li>
+<li>Si el usuario tiene contraseña, debemos escribirla en <code>spring.datasource.password</code>. No debemos dejarla vacía salvo que PostgreSQL esté configurado realmente para permitir esa conexión sin contraseña.</li>
+</ul>
+<h3 id="que-significa-ddl-auto">¿Qué significa ddl-auto?</h3>
+<p>La propiedad <code>spring.jpa.hibernate.ddl-auto</code> permite indicar qué debe hacer Hibernate con la estructura de la base de datos.</p>
+<p>Los valores más habituales son:</p>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Comportamiento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>none</code></td>
+<td>No modifica el esquema de la base de datos.</td>
+</tr>
+<tr>
+<td><code>validate</code></td>
+<td>Comprueba que las tablas coinciden con las entidades.</td>
+</tr>
+<tr>
+<td><code>update</code></td>
+<td>Actualiza el esquema para adaptarlo a las entidades sin eliminar los datos existentes de forma general.</td>
+</tr>
+<tr>
+<td><code>create</code></td>
+<td>Crea de nuevo el esquema al iniciar la aplicación.</td>
+</tr>
+<tr>
+<td><code>create-drop</code></td>
+<td>Crea el esquema al iniciar y lo elimina al cerrar la aplicación.</td>
+</tr>
+</tbody>
+</table>
+<p>Durante el desarrollo utilizaremos:</p>
+<pre><code class="language-properties">spring.jpa.hibernate.ddl-auto=update
+</code></pre>
+<p>Así, cuando creemos una entidad nueva, Hibernate podrá generar la tabla correspondiente.</p>
+<p><strong>Importante:</strong> <code>update</code>, <code>create</code> y <code>create-drop</code> son opciones pensadas para desarrollo y aprendizaje. En aplicaciones reales debemos gestionar los cambios de esquema mediante herramientas de migración como Flyway o Liquibase, y evitar que Hibernate modifique automáticamente la base de datos de producción.</p>
+<h3 id="seguridad-de-las-credenciales">Seguridad de las credenciales</h3>
+<p>No debemos subir contraseñas reales al repositorio de GitHub. Para un proyecto compartido podemos utilizar variables de entorno:</p>
+<pre><code class="language-properties">spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+</code></pre>
+<p>De esta manera, cada ordenador configura sus propias credenciales sin guardarlas en el código fuente.</p>
+<h2 id="24-model-representacion-de-los-datos">2.4. Model: representación de los datos</h2>
+<p>Un Model representa un objeto de nuestro dominio, es decir, un elemento con el que trabaja nuestra aplicación.</p>
+<p>En nuestro gestor de tareas necesitamos representar una tarea con los siguientes atributos:</p>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th>Tipo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>Long</td>
+<td>Identificador de la tarea.</td>
+</tr>
+<tr>
+<td>titulo</td>
+<td>String</td>
+<td>Título de la tarea.</td>
+</tr>
+<tr>
+<td>descripcion</td>
+<td>String</td>
+<td>Descripción de la tarea.</td>
+</tr>
+<tr>
+<td>completada</td>
+<td>boolean</td>
+<td>Indica si la tarea está finalizada.</td>
+</tr>
+</tbody>
+</table>
+<p>Crearemos el paquete <code>model</code> y dentro la clase <code>Tarea</code>.</p>
+<h3 id="tareajava">Tarea.java</h3>
+<pre><code class="language-java">package com.daw.vdg.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = &quot;tareas&quot;)
+public class Tarea {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 150)
+    private String titulo;
+
+    @Column(length = 1000)
+    private String descripcion;
+
+    @Column(nullable = false)
+    private boolean completada;
+
+    // Constructor vacío necesario para JPA
+    public Tarea() {
+    }
+
+    // Constructor sin ID: lo genera la base de datos
+    public Tarea(String titulo, String descripcion, boolean completada) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.completada = completada;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public boolean isCompletada() {
+        return completada;
+    }
+
+    public void setCompletada(boolean completada) {
+        this.completada = completada;
+    }
+}
+</code></pre>
+<h3 id="explicacion-de-las-anotaciones-jpa">Explicación de las anotaciones JPA</h3>
+<p><strong>@Entity</strong></p>
+<p>Indica que la clase representa una entidad persistente. Hibernate utilizará esta clase para almacenar y recuperar información de la base de datos.</p>
+<p><strong>@Table</strong></p>
+<p>Permite indicar el nombre de la tabla asociada a la entidad:</p>
+<pre><code class="language-java">@Table(name = &quot;tareas&quot;)
+</code></pre>
+<p>En este caso, la tabla se llamará <code>tareas</code>.</p>
+<p><strong>@Id</strong></p>
+<p>Indica qué atributo representa la clave primaria de la tabla.</p>
+<p><strong>@GeneratedValue</strong></p>
+<p>Indica que el identificador se genera automáticamente:</p>
+<pre><code class="language-java">@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
+</code></pre>
+<p>Con <code>GenerationType.IDENTITY</code> delegamos la generación del identificador en la base de datos. En PostgreSQL se utilizará una columna con generación de identidad.</p>
+<p>Por tanto, cuando creemos una tarea no tendremos que asignarle manualmente un ID.</p>
+<p><strong>@Column</strong></p>
+<p>Permite configurar las características de una columna:</p>
+<pre><code class="language-java">@Column(nullable = false, length = 150)
+private String titulo;
+</code></pre>
+<p>En este caso, el título será obligatorio y tendrá una longitud máxima de 150 caracteres.</p>
+<h3 id="por-que-necesitamos-un-constructor-vacio">¿Por qué necesitamos un constructor vacío?</h3>
+<pre><code class="language-java">public Tarea() {
+}
+</code></pre>
+<p>JPA necesita poder crear instancias de las entidades mediante reflexión. Por eso debemos proporcionar un constructor sin parámetros, que puede ser <code>public</code> o <code>protected</code>.</p>
+<h2 id="25-dto-objetos-para-transferir-datos">2.5. DTO: objetos para transferir datos</h2>
+<p>DTO significa <em>Data Transfer Object</em>.</p>
+<p>Es un objeto que utilizamos para definir qué información entra o sale de nuestra API.</p>
+<p>Podríamos devolver directamente una entidad <code>Tarea</code> desde el Controller, pero es preferible separar los objetos internos de los datos que exponemos al exterior.</p>
+<p>Esto nos permite:</p>
+<ul>
+<li>Decidir qué atributos recibe el cliente.</li>
+<li>Decidir qué información devolvemos.</li>
+<li>Evitar exponer directamente nuestras entidades.</li>
+<li>Modificar el modelo interno sin tener que cambiar necesariamente el formato de la API.</li>
+</ul>
+<p>Vamos a crear dos DTO diferentes.</p>
+<h3 id="tarearequestdto">TareaRequestDTO</h3>
+<p>Representa los datos que el cliente envía cuando quiere crear o actualizar una tarea.</p>
+<p>No necesitamos recibir el identificador porque lo genera PostgreSQL.</p>
+<pre><code class="language-java">package com.daw.vdg.dto;
+
+public record TareaRequestDTO(
+        String titulo,
+        String descripcion,
+        boolean completada
+) {
+}
+</code></pre>
+<h3 id="tarearesponsedto">TareaResponseDTO</h3>
+<p>Representa los datos que nuestra API devuelve al cliente. En este caso sí incluimos el identificador.</p>
+<pre><code class="language-java">package com.daw.vdg.dto;
+
+public record TareaResponseDTO(
+        Long id,
+        String titulo,
+        String descripcion,
+        boolean completada
+) {
+}
+</code></pre>
+<p>Estamos utilizando <code>record</code>, una característica disponible desde Java 16.</p>
+<p>Los records permiten crear clases destinadas principalmente a transportar datos, evitando escribir manualmente constructores, getters, <code>equals()</code>, <code>hashCode()</code> y <code>toString()</code>.</p>
+<p>Por ejemplo, podemos acceder al título mediante:</p>
+<pre><code class="language-java">String titulo = tareaResponseDTO.titulo();
+</code></pre>
+<p><strong>Diferencia importante:</strong></p>
+<ul>
+<li><code>TareaRequestDTO</code>: representa los datos que recibimos.</li>
+<li><code>TareaResponseDTO</code>: representa los datos que devolvemos.</li>
+</ul>
+<p>Más adelante incorporaremos validaciones a los DTO para comprobar que los datos recibidos son correctos.</p>
+<h2 id="26-mapper-conversion-entre-objetos">2.6. Mapper: conversión entre objetos</h2>
+<p>Tenemos dos tipos de objetos:</p>
+<ul>
+<li>Model: representa los datos con los que trabaja nuestra aplicación.</li>
+<li>DTO: representa los datos que intercambiamos con el cliente.</li>
+</ul>
+<p>Necesitamos convertir unos objetos en otros. Para ello utilizaremos un Mapper.</p>
+<p>Crearemos el paquete <code>mapper</code> y dentro la clase <code>TareaMapper</code>.</p>
+<h3 id="tareamapperjava">TareaMapper.java</h3>
+<pre><code class="language-java">package com.daw.vdg.mapper;
+
+import com.daw.vdg.dto.TareaRequestDTO;
+import com.daw.vdg.dto.TareaResponseDTO;
+import com.daw.vdg.model.Tarea;
+import org.springframework.stereotype.Component;
+
+@Component
+public class TareaMapper {
+
+    public Tarea toModel(TareaRequestDTO dto) {
+
+        return new Tarea(
+                dto.titulo(),
+                dto.descripcion(),
+                dto.completada()
+        );
+    }
+
+    public TareaResponseDTO toResponse(Tarea tarea) {
+
+        return new TareaResponseDTO(
+                tarea.getId(),
+                tarea.getTitulo(),
+                tarea.getDescripcion(),
+                tarea.isCompletada()
+        );
+    }
+}
+</code></pre>
+<p>Hemos creado dos métodos:</p>
+<p><strong>toModel()</strong></p>
+<p>Recibe un <code>TareaRequestDTO</code> y devuelve un objeto <code>Tarea</code>. Lo utilizaremos cuando recibamos información del cliente y necesitemos trabajar con ella dentro de nuestra aplicación.</p>
+<p>Observa que no asignamos el ID: lo generará la base de datos.</p>
+<p><strong>toResponse()</strong></p>
+<p>Recibe un objeto <code>Tarea</code> y devuelve un <code>TareaResponseDTO</code>. Lo utilizaremos cuando queramos devolver información al cliente.</p>
+<p>La anotación <code>@Component</code> indica a Spring que debe gestionar esta clase como un bean. Así podremos inyectarla en el Controller en lugar de crearla manualmente con <code>new</code>.</p>
+<h2 id="27-repository-acceso-a-los-datos">2.7. Repository: acceso a los datos</h2>
+<p>El Repository es la capa encargada de comunicarse con la base de datos.</p>
+<p>Spring Data JPA nos permite crear repositorios sin tener que implementar manualmente las operaciones CRUD más habituales.</p>
+<p>Crearemos el paquete <code>repository</code> y dentro la interfaz <code>TareaRepository</code>.</p>
+<h3 id="tarearepositoryjava">TareaRepository.java</h3>
+<pre><code class="language-java">package com.daw.vdg.repository;
+
+import com.daw.vdg.model.Tarea;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TareaRepository extends JpaRepository&lt;Tarea, Long&gt; {
+}
+</code></pre>
+<p>Observa que no hemos escrito ningún método.</p>
+<p>Al extender de <code>JpaRepository</code>, Spring Data JPA nos proporciona automáticamente operaciones como:</p>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>findAll()</code></td>
+<td>Obtiene todos los registros.</td>
+</tr>
+<tr>
+<td><code>findById(id)</code></td>
+<td>Busca un registro por su identificador.</td>
+</tr>
+<tr>
+<td><code>save(objeto)</code></td>
+<td>Inserta o actualiza un registro.</td>
+</tr>
+<tr>
+<td><code>deleteById(id)</code></td>
+<td>Elimina un registro por su identificador.</td>
+</tr>
+<tr>
+<td><code>existsById(id)</code></td>
+<td>Comprueba si existe un registro.</td>
+</tr>
+<tr>
+<td><code>count()</code></td>
+<td>Devuelve el número de registros.</td>
+</tr>
+</tbody>
+</table>
+<p>En la declaración:</p>
+<pre><code class="language-java">JpaRepository&lt;Tarea, Long&gt;
+</code></pre>
+<p>Indicamos dos tipos:</p>
+<ul>
+<li><code>Tarea</code>: la entidad con la que trabajará el repositorio.</li>
+<li><code>Long</code>: el tipo de dato de su clave primaria.</li>
+</ul>
+<p>No necesitamos añadir <code>@Repository</code> expresamente porque Spring Data JPA genera y registra automáticamente la implementación de esta interfaz.</p>
+<h2 id="28-service-logica-de-negocio">2.8. Service: lógica de negocio</h2>
+<p>El Service contiene la lógica de negocio de nuestra aplicación.</p>
+<p>En nuestro gestor de tareas será responsable de:</p>
+<ul>
+<li>Obtener todas las tareas.</li>
+<li>Buscar una tarea por su identificador.</li>
+<li>Crear una tarea.</li>
+<li>Actualizar una tarea.</li>
+<li>Eliminar una tarea.</li>
+</ul>
+<p>El Controller no debería contener toda esta lógica. Su responsabilidad será recibir las peticiones y delegar el trabajo en el Service.</p>
+<h3 id="tareaservicejava">TareaService.java</h3>
+<pre><code class="language-java">package com.daw.vdg.service;
+
+import com.daw.vdg.model.Tarea;
+import com.daw.vdg.repository.TareaRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
+@Service
+public class TareaService {
+
+    private final TareaRepository tareaRepository;
+
+    public TareaService(TareaRepository tareaRepository) {
+        this.tareaRepository = tareaRepository;
+    }
+
+    public List&lt;Tarea&gt; obtenerTodas() {
+        return tareaRepository.findAll();
+    }
+
+    public Tarea obtenerPorId(Long id) {
+
+        return tareaRepository.findById(id)
+                .orElseThrow(() -&gt; new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        &quot;No se ha encontrado la tarea&quot;
+                ));
+    }
+
+    public Tarea crear(Tarea tarea) {
+        return tareaRepository.save(tarea);
+    }
+
+    public Tarea actualizar(Long id, Tarea datosActualizados) {
+
+        Tarea tarea = obtenerPorId(id);
+
+        tarea.setTitulo(datosActualizados.getTitulo());
+        tarea.setDescripcion(datosActualizados.getDescripcion());
+        tarea.setCompletada(datosActualizados.isCompletada());
+
+        return tareaRepository.save(tarea);
+    }
+
+    public void eliminar(Long id) {
+
+        Tarea tarea = obtenerPorId(id);
+
+        tareaRepository.delete(tarea);
+    }
+}
+</code></pre>
+<h3 id="explicacion-de-la-anotacion-service">Explicación de la anotación @Service</h3>
+<pre><code class="language-java">@Service
+public class TareaService {
+</code></pre>
+<p>La anotación <code>@Service</code> indica a Spring que esta clase contiene lógica de negocio y que debe gestionarla como un bean.</p>
+<h3 id="inyeccion-de-dependencias-por-constructor">Inyección de dependencias por constructor</h3>
+<pre><code class="language-java">private final TareaRepository tareaRepository;
+
+public TareaService(TareaRepository tareaRepository) {
+    this.tareaRepository = tareaRepository;
+}
+</code></pre>
+<p>El Service necesita un Repository para acceder a los datos.</p>
+<p>En lugar de crear manualmente un objeto mediante <code>new TareaRepository()</code>, dejamos que Spring proporcione la implementación correspondiente.</p>
+<p>Esto es posible gracias a la inyección de dependencias.</p>
+<p>Utilizamos inyección por constructor, una de las formas recomendadas de trabajar con Spring.</p>
+<p>No necesitamos <code>@Autowired</code> cuando existe un único constructor.</p>
+<h3 id="buscar-una-tarea-por-id">Buscar una tarea por ID</h3>
+<pre><code class="language-java">return tareaRepository.findById(id)
+        .orElseThrow(() -&gt; new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                &quot;No se ha encontrado la tarea&quot;
+        ));
+</code></pre>
+<p>El método <code>findById()</code> devuelve un <code>Optional&lt;Tarea&gt;</code> porque puede que la tarea no exista.</p>
+<p>Con <code>orElseThrow()</code> indicamos que, si no encontramos la tarea, debemos lanzar una excepción HTTP 404 (Not Found).</p>
+<h3 id="crear-una-tarea">Crear una tarea</h3>
+<pre><code class="language-java">public Tarea crear(Tarea tarea) {
+    return tareaRepository.save(tarea);
+}
+</code></pre>
+<p>El método <code>save()</code> guarda la entidad en la base de datos. Como la tarea es nueva y su ID todavía es <code>null</code>, PostgreSQL genera automáticamente el identificador.</p>
+<h3 id="actualizar-una-tarea">Actualizar una tarea</h3>
+<p>Primero recuperamos la entidad existente mediante <code>obtenerPorId(id)</code>. Después modificamos sus atributos y guardamos los cambios.</p>
+<p>Es importante actualizar la entidad recuperada, conservando su identificador, en lugar de crear una entidad nueva sin ID.</p>
+<h3 id="eliminar-una-tarea">Eliminar una tarea</h3>
+<p>Primero comprobamos que la tarea existe y después la eliminamos mediante el Repository.</p>
+<h2 id="29-controller-recibir-peticiones-http">2.9. Controller: recibir peticiones HTTP</h2>
+<p>El Controller es la capa que se comunica directamente con el cliente.</p>
+<p>Su responsabilidad consiste en:</p>
+<ul>
+<li>Recibir peticiones HTTP.</li>
+<li>Obtener los parámetros enviados por el cliente.</li>
+<li>Invocar los métodos del Service.</li>
+<li>Transformar los resultados mediante el Mapper.</li>
+<li>Devolver respuestas HTTP.</li>
+</ul>
+<p>Crearemos el paquete <code>controller</code> y dentro la clase <code>TareaController</code>.</p>
+<h3 id="tareacontrollerjava">TareaController.java</h3>
+<pre><code class="language-java">package com.daw.vdg.controller;
+
+import com.daw.vdg.dto.TareaRequestDTO;
+import com.daw.vdg.dto.TareaResponseDTO;
+import com.daw.vdg.mapper.TareaMapper;
+import com.daw.vdg.model.Tarea;
+import com.daw.vdg.service.TareaService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api/tareas&quot;)
+public class TareaController {
+
+    private final TareaService tareaService;
+    private final TareaMapper tareaMapper;
+
+    public TareaController(
+            TareaService tareaService,
+            TareaMapper tareaMapper
+    ) {
+        this.tareaService = tareaService;
+        this.tareaMapper = tareaMapper;
+    }
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;TareaResponseDTO&gt;&gt; obtenerTodas() {
+
+        List&lt;TareaResponseDTO&gt; respuesta = tareaService.obtenerTodas()
+                .stream()
+                .map(tareaMapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;TareaResponseDTO&gt; obtenerPorId(
+            @PathVariable Long id
+    ) {
+
+        Tarea tarea = tareaService.obtenerPorId(id);
+
+        return ResponseEntity.ok(tareaMapper.toResponse(tarea));
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;TareaResponseDTO&gt; crear(
+            @RequestBody TareaRequestDTO dto
+    ) {
+
+        Tarea nuevaTarea = tareaMapper.toModel(dto);
+
+        Tarea tareaCreada = tareaService.crear(nuevaTarea);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(tareaMapper.toResponse(tareaCreada));
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;TareaResponseDTO&gt; actualizar(
+            @PathVariable Long id,
+            @RequestBody TareaRequestDTO dto
+    ) {
+
+        Tarea datosActualizados = tareaMapper.toModel(dto);
+
+        Tarea tareaActualizada = tareaService.actualizar(
+                id,
+                datosActualizados
+        );
+
+        return ResponseEntity.ok(
+                tareaMapper.toResponse(tareaActualizada)
+        );
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; eliminar(@PathVariable Long id) {
+
+        tareaService.eliminar(id);
+
+        return ResponseEntity.noContent().build();
+    }
+}
+</code></pre>
+<h3 id="analizamos-las-anotaciones">Analizamos las anotaciones</h3>
+<p><strong>@RestController</strong></p>
+<p>Indica que la clase es un controlador REST. Spring recibe las peticiones HTTP y convierte los objetos devueltos a formatos como JSON.</p>
+<p>Combina las funcionalidades de <code>@Controller</code> y <code>@ResponseBody</code>.</p>
+<p><strong>@RequestMapping</strong></p>
+<pre><code class="language-java">@RequestMapping(&quot;/api/tareas&quot;)
+</code></pre>
+<p>Define la ruta base de todos los endpoints de este controlador.</p>
+<p><strong>@GetMapping</strong></p>
+<p>Se utiliza para recibir peticiones HTTP GET.</p>
+<p><strong>@PostMapping</strong></p>
+<p>Se utiliza para recibir peticiones HTTP POST.</p>
+<p><strong>@PutMapping</strong></p>
+<p>Se utiliza para recibir peticiones HTTP PUT.</p>
+<p><strong>@DeleteMapping</strong></p>
+<p>Se utiliza para recibir peticiones HTTP DELETE.</p>
+<p><strong>@PathVariable</strong></p>
+<p>Permite recoger un valor incluido en la propia URL.</p>
+<p>Por ejemplo:</p>
+<pre><code class="language-java">@GetMapping(&quot;/{id}&quot;)
+public ResponseEntity&lt;TareaResponseDTO&gt; obtenerPorId(
+        @PathVariable Long id
+) {
+</code></pre>
+<p>Si recibimos la petición <code>GET /api/tareas/5</code>, el parámetro <code>id</code> tendrá el valor <code>5</code>.</p>
+<p><strong>@RequestBody</strong></p>
+<p>Permite convertir el cuerpo de una petición HTTP, normalmente enviado en formato JSON, en un objeto Java.</p>
+<p>Por ejemplo, al recibir:</p>
+<pre><code class="language-json">{
+    &quot;titulo&quot;: &quot;Estudiar Spring Boot&quot;,
+    &quot;descripcion&quot;: &quot;Repasar arquitectura por capas&quot;,
+    &quot;completada&quot;: false
+}
+</code></pre>
+<p>Spring convierte automáticamente el JSON en un objeto <code>TareaRequestDTO</code>.</p>
+<h3 id="que-es-responseentity">¿Qué es ResponseEntity?</h3>
+<p><code>ResponseEntity</code> representa una respuesta HTTP completa.</p>
+<p>Nos permite controlar:</p>
+<ul>
+<li>El código de estado HTTP.</li>
+<li>Las cabeceras de la respuesta.</li>
+<li>El cuerpo de la respuesta.</li>
+</ul>
+<p>Por ejemplo:</p>
+<pre><code class="language-java">return ResponseEntity.ok(respuesta);
+</code></pre>
+<p>Devuelve el código HTTP 200 OK junto con los datos.</p>
+<pre><code class="language-java">return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .body(respuesta);
+</code></pre>
+<p>Devuelve el código HTTP 201 Created.</p>
+<pre><code class="language-java">return ResponseEntity.noContent().build();
+</code></pre>
+<p>Devuelve el código HTTP 204 No Content, sin cuerpo de respuesta.</p>
+<h2 id="210-probamos-nuestra-api-rest">2.10. Probamos nuestra API REST</h2>
+<p>Antes de ejecutar la aplicación, debemos comprobar que:</p>
+<ol>
+<li>PostgreSQL está iniciado.</li>
+<li>Existe la base de datos indicada en <code>spring.datasource.url</code>.</li>
+<li>El usuario y la contraseña configurados son correctos.</li>
+<li>Las dependencias de Maven están descargadas.</li>
+</ol>
+<p>Ejecutamos la aplicación desde <code>VdgApplication</code>.</p>
+<p>Como hemos configurado el puerto 8082, nuestra API tendrá como dirección base:</p>
+<pre><code class="language-text">http://localhost:8082/api/tareas
+</code></pre>
+<p>Podemos probar los endpoints utilizando Postman.</p>
+<h3 id="obtener-todas-las-tareas">Obtener todas las tareas</h3>
+<p><strong>Petición:</strong></p>
+<pre><code class="language-http">GET http://localhost:8082/api/tareas
+</code></pre>
+<p>Si todavía no hay tareas, devolverá una lista vacía:</p>
+<pre><code class="language-json">[]
+</code></pre>
+<h3 id="crear-una-tarea_1">Crear una tarea</h3>
+<p><strong>Petición:</strong></p>
+<pre><code class="language-http">POST http://localhost:8082/api/tareas
+</code></pre>
+<p>En Postman seleccionamos <code>Body → raw → JSON</code> y enviamos:</p>
+<pre><code class="language-json">{
+    &quot;titulo&quot;: &quot;Estudiar Spring Boot&quot;,
+    &quot;descripcion&quot;: &quot;Aprender a crear una API REST&quot;,
+    &quot;completada&quot;: false
+}
+</code></pre>
+<p><strong>Respuesta esperada:</strong></p>
+<pre><code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;titulo&quot;: &quot;Estudiar Spring Boot&quot;,
+    &quot;descripcion&quot;: &quot;Aprender a crear una API REST&quot;,
+    &quot;completada&quot;: false
+}
+</code></pre>
+<p>El código HTTP será 201 Created. El ID lo habrá generado PostgreSQL.</p>
+<h3 id="obtener-una-tarea-por-su-identificador">Obtener una tarea por su identificador</h3>
+<p><strong>Petición:</strong></p>
+<pre><code class="language-http">GET http://localhost:8082/api/tareas/1
+</code></pre>
+<p><strong>Respuesta esperada:</strong></p>
+<pre><code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;titulo&quot;: &quot;Estudiar Spring Boot&quot;,
+    &quot;descripcion&quot;: &quot;Aprender a crear una API REST&quot;,
+    &quot;completada&quot;: false
+}
+</code></pre>
+<h3 id="actualizar-una-tarea_1">Actualizar una tarea</h3>
+<p><strong>Petición:</strong></p>
+<pre><code class="language-http">PUT http://localhost:8082/api/tareas/1
+</code></pre>
+<p>Body:</p>
+<pre><code class="language-json">{
+    &quot;titulo&quot;: &quot;Estudiar Spring Boot y REST&quot;,
+    &quot;descripcion&quot;: &quot;Completar los ejercicios de la unidad&quot;,
+    &quot;completada&quot;: true
+}
+</code></pre>
+<p>La API devolverá la tarea actualizada con el código 200 OK.</p>
+<h3 id="eliminar-una-tarea_1">Eliminar una tarea</h3>
+<p><strong>Petición:</strong></p>
+<pre><code class="language-http">DELETE http://localhost:8082/api/tareas/1
+</code></pre>
+<p>Si la eliminación se realiza correctamente, devolveremos el código 204 No Content.</p>
+<p>Si intentamos consultar una tarea que no existe, obtendremos un error 404 Not Found.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
